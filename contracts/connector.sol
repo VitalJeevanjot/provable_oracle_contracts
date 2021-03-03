@@ -1,3 +1,7 @@
+/**
+ *Submitted for verification at Etherscan.io on 2017-10-12
+ */
+
 /*
 Copyright (c) 2015-2016 Oraclize SRL
 Copyright (c) 2016-2017 Oraclize LTD
@@ -95,19 +99,19 @@ contract Oraclize {
     address owner;
     address paymentFlagger;
 
-    function changeAdmin(address _newAdmin) external onlyadmin {
+    function changeAdmin(address _newAdmin) external {
+        onlyadmin();
         owner = _newAdmin;
     }
 
-    function changePaymentFlagger(address _newFlagger) external onlyadmin {
+    function changePaymentFlagger(address _newFlagger) external {
+        onlyadmin();
         paymentFlagger = _newFlagger;
     }
 
-    function addCbAddress(address newCbAddress, bytes1 addressType)
-        external
-        onlyadmin
-    {
-        //bytes memory memory nil = '';
+    function addCbAddress(address newCbAddress, bytes1 addressType) external {
+        onlyadmin();
+        //bytes memory nil = '';
         addCbAddress(newCbAddress, addressType, hex"");
     }
 
@@ -116,16 +120,18 @@ contract Oraclize {
         address newCbAddress,
         bytes1 addressType,
         bytes memory proof
-    ) public onlyadmin {
+    ) public {
+        onlyadmin();
         cbAddresses[newCbAddress] = addressType;
     }
 
-    function removeCbAddress(address newCbAddress) external onlyadmin {
+    function removeCbAddress(address newCbAddress) external {
+        onlyadmin();
         delete cbAddresses[newCbAddress];
     }
 
-    function cbAddress() internal view returns (address _cbAddress) {
-        if (cbAddresses[tx.origin] != 0) _cbAddress = tx.origin;
+    function cbAddress() public view returns (address _cbAddress) {
+        if (cbAddresses[tx.origin] != 0x00) return _cbAddress = tx.origin;
     }
 
     function addDSource(string calldata dsname, uint256 multiplier) external {
@@ -136,7 +142,8 @@ contract Oraclize {
         string memory dsname,
         bytes1 proofType,
         uint256 multiplier
-    ) public onlyadmin {
+    ) public {
+        onlyadmin();
         bytes32 dsname_hash = keccak256(abi.encodePacked(dsname, proofType));
         dsources[dsources.length++] = dsname_hash;
         price_multiplier[dsname_hash] = multiplier;
@@ -146,8 +153,9 @@ contract Oraclize {
     function multiAddDSource(
         bytes32[] calldata dsHash,
         uint256[] calldata multiplier
-    ) external onlyadmin {
-        // dsHash -> keccak256(DATASOURCE_NAME, PROOF_TYPE);
+    ) external {
+        onlyadmin();
+        // dsHash -> keccak256(abi.encodePacked(DATASOURCE_NAME, PROOF_TYPE));
         for (uint256 i = 0; i < dsHash.length; i++) {
             dsources[dsources.length++] = dsHash[i];
             price_multiplier[dsHash[i]] = multiplier[i];
@@ -157,7 +165,8 @@ contract Oraclize {
     function multisetProofType(
         uint256[] calldata _proofType,
         address[] calldata _addr
-    ) external onlyadmin {
+    ) external {
+        onlyadmin();
         for (uint256 i = 0; i < _addr.length; i++)
             addr_proofType[_addr[i]] = bytes1(uint8(_proofType[i]));
     }
@@ -165,19 +174,22 @@ contract Oraclize {
     function multisetCustomGasPrice(
         uint256[] calldata _gasPrice,
         address[] calldata _addr
-    ) external onlyadmin {
+    ) external {
+        onlyadmin();
         for (uint256 i = 0; i < _addr.length; i++)
             addr_gasPrice[_addr[i]] = _gasPrice[i];
     }
 
     uint256 gasprice = 20000000000;
 
-    function setGasPrice(uint256 newgasprice) external onlyadmin {
+    function setGasPrice(uint256 newgasprice) external {
+        onlyadmin();
         gasprice = newgasprice;
     }
 
-    function setBasePrice(uint256 new_baseprice) external onlyadmin {
+    function setBasePrice(uint256 new_baseprice) external {
         //0.001 usd in ether
+        onlyadmin();
         baseprice = new_baseprice;
         for (uint256 i = 0; i < dsources.length; i++)
             price[dsources[i]] = new_baseprice * price_multiplier[dsources[i]];
@@ -185,9 +197,9 @@ contract Oraclize {
 
     function setBasePrice(uint256 new_baseprice, bytes calldata proofID)
         external
-        onlyadmin
     {
         //0.001 usd in ether
+        onlyadmin();
         baseprice = new_baseprice;
         for (uint256 i = 0; i < dsources.length; i++)
             price[dsources[i]] = new_baseprice * price_multiplier[dsources[i]];
@@ -199,7 +211,8 @@ contract Oraclize {
         emit Emit_OffchainPaymentFlag(_addr, _addr, _flag, _flag);
     }
 
-    function withdrawFunds(address payable _addr) external onlyadmin {
+    function withdrawFunds(address payable _addr) external {
+        onlyadmin();
         _addr.send(address(this).balance);
     }
 
@@ -212,20 +225,9 @@ contract Oraclize {
 
     // Pesudo-modifiers
 
-    modifier onlyadmin {
-        require(
-            msg.sender == owner,
-            "You are not allowed to call admin only methods"
-        );
-        _;
+    function onlyadmin() private {
+        if (msg.sender != owner) revert();
     }
-
-    // function onlyadmin() private {
-    //     require(
-    //         msg.sender == owner,
-    //         "You are not allowed to call admin only methods"
-    //     );
-    // }
 
     function costs(string memory datasource, uint256 gaslimit)
         private
@@ -255,7 +257,8 @@ contract Oraclize {
 
     function randomDS_updateSessionPubKeysHash(
         bytes32[] calldata _newSessionPubKeysHash
-    ) external onlyadmin {
+    ) external {
+        onlyadmin();
         randomDS_sessionPubKeysHash.length = 0;
         for (uint256 i = 0; i < _newSessionPubKeysHash.length; i++)
             randomDS_sessionPubKeysHash.push(_newSessionPubKeysHash[i]);
@@ -391,7 +394,7 @@ contract Oraclize {
     }
 
     /*  Needless?
-    function query(uint _timestamp, string memory _datasource, string memory _arg, uint _gaslimit)
+    function query(uint _timestamp, string _datasource, string _arg, uint _gaslimit)
     payable
     external
     returns (bytes32 _id)

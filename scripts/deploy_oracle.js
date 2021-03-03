@@ -6,42 +6,51 @@
 const hre = require("hardhat");
 
 async function main () {
-  const ethers = hre.ethers
-  const l2ethers = hre.l2ethers
+  // const ethers = hre.ethers
+  // const l2ethers = hre.l2ethers
 
 
-  console.log('network:', await ethers.provider.getNetwork())
+  // console.log('network:', await ethers.provider.getNetwork())
 
-  const signer = (await ethers.getSigners())[0]
-  console.log('signer:', await signer.getAddress())
+  // const signer = (await ethers.getSigners())[0]
+  // console.log('signer:', await signer.getAddress())
 
-  const Greeter = await l2ethers.getContractFactory('Greeter', {
-    signer: (await ethers.getSigners())[0]
+  // const Greeter = await l2ethers.getContractFactory('Greeter', {
+  //   signer: (await ethers.getSigners())[0]
+  // })
+
+  // const greeter = await Greeter.deploy('Hello, world!')
+  // await greeter.deployed()
+
+  // console.log('Greeter deployed to:', greeter.address)
+  // console.log(
+  //   'deployed bytecode:',
+  //   await ethers.provider.getCode(greeter.address)
+  // )
+  // console.log('greeting:', await greeter.greet())
+  // // Hardhat always runs the compile task when running scripts with its command
+  // // line interface.
+  // //
+  // // If this script is run directly using `node` you may want to call compile 
+  // // manually to make sure everything is compiled
+  // // await hre.run('compile');
+
+  // // We get the contract to deploy
+  // const OraclizeAddrResolver = await hre.ethers.getContractFactory("OraclizeAddrResolver");
+  // const oraclizeAddrResolver = await OraclizeAddrResolver.deploy();
+  // console.log("oraclizeAddrResolver deployed to:", oraclizeAddrResolver.address);
+
+  const Oracle = await hre.ethers.getContractFactory("Oraclize");
+  const oracle = await Oracle.deploy();
+  console.log("oracle connector deployed to:", oracle.address);
+
+  // await hre.run("verify:verify", {
+  //   address: oraclizeAddrResolver.address
+  // })
+  await hre.run("verify:verify", {
+    address: oracle.address
   })
 
-  const greeter = await Greeter.deploy('Hello, world!')
-  await greeter.deployed()
-
-  console.log('Greeter deployed to:', greeter.address)
-  console.log(
-    'deployed bytecode:',
-    await ethers.provider.getCode(greeter.address)
-  )
-  console.log('greeting:', await greeter.greet())
-  // Hardhat always runs the compile task when running scripts with its command
-  // line interface.
-  //
-  // If this script is run directly using `node` you may want to call compile 
-  // manually to make sure everything is compiled
-  // await hre.run('compile');
-
-  // We get the contract to deploy
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
-
-  await greeter.deployed();
-
-  console.log("Greeter deployed to:", greeter.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -1,24 +1,4 @@
 // <provableAPI>
-/*
-Copyright (c) 2015-2016 Oraclize SRL
-Copyright (c) 2016-2019 Oraclize LTD
-Copyright (c) 2019 Provable Things Limited
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-*/
 pragma solidity >=0.5.0 <0.6.0; // Incompatible compiler version - please select a compiler within the stated pragma range, or use a different version of the provableAPI!
 
 // Dummy contract only used to emit to end-user they are using wrong solc
@@ -408,80 +388,88 @@ contract usingProvable {
     }
 
     function provable_setNetwork() internal returns (bool _networkSet) {
-        if (getCodeSize(0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed) > 0) {
-            //mainnet
-            OAR = OracleAddrResolverI(
-                0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed
-            );
-            provable_setNetworkName("eth_mainnet");
-            return true;
-        }
-        if (getCodeSize(0xc03A2615D5efaf5F49F60B7BB6583eaec212fdf1) > 0) {
-            //ropsten testnet
-            OAR = OracleAddrResolverI(
-                0xc03A2615D5efaf5F49F60B7BB6583eaec212fdf1
-            );
-            provable_setNetworkName("eth_ropsten3");
-            return true;
-        }
-        if (getCodeSize(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e) > 0) {
+        // if (getCodeSize(0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed) > 0) {
+        //     //mainnet
+        //     OAR = OracleAddrResolverI(
+        //         0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed
+        //     );
+        //     provable_setNetworkName("eth_mainnet");
+        //     return true;
+        // }
+        // if (getCodeSize(0xc03A2615D5efaf5F49F60B7BB6583eaec212fdf1) > 0) {
+        //     //ropsten testnet
+        //     OAR = OracleAddrResolverI(
+        //         0xc03A2615D5efaf5F49F60B7BB6583eaec212fdf1
+        //     );
+        //     provable_setNetworkName("eth_ropsten3");
+        //     return true;
+        // }
+        // if (getCodeSize(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e) > 0) {
+        //     //kovan testnet
+        //     OAR = OracleAddrResolverI(
+        //         0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e
+        //     );
+        //     provable_setNetworkName("eth_kovan");
+        //     return true;
+        // }
+        if (getCodeSize(0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8) > 0) {
             //kovan testnet
             OAR = OracleAddrResolverI(
-                0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e
+                0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8
             );
             provable_setNetworkName("eth_kovan");
             return true;
         }
-        if (getCodeSize(0x146500cfd35B22E4A392Fe0aDc06De1a1368Ed48) > 0) {
-            //rinkeby testnet
-            OAR = OracleAddrResolverI(
-                0x146500cfd35B22E4A392Fe0aDc06De1a1368Ed48
-            );
-            provable_setNetworkName("eth_rinkeby");
-            return true;
-        }
-        if (getCodeSize(0xa2998EFD205FB9D4B4963aFb70778D6354ad3A41) > 0) {
-            //goerli testnet
-            OAR = OracleAddrResolverI(
-                0xa2998EFD205FB9D4B4963aFb70778D6354ad3A41
-            );
-            provable_setNetworkName("eth_goerli");
-            return true;
-        }
-        if (getCodeSize(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475) > 0) {
-            //ethereum-bridge
-            OAR = OracleAddrResolverI(
-                0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475
-            );
-            return true;
-        }
-        if (getCodeSize(0x20e12A1F859B3FeaE5Fb2A0A32C18F5a65555bBF) > 0) {
-            //ether.camp ide
-            OAR = OracleAddrResolverI(
-                0x20e12A1F859B3FeaE5Fb2A0A32C18F5a65555bBF
-            );
-            return true;
-        }
-        if (getCodeSize(0x51efaF4c8B3C9AfBD5aB9F4bbC82784Ab6ef8fAA) > 0) {
-            //browser-solidity
-            OAR = OracleAddrResolverI(
-                0x51efaF4c8B3C9AfBD5aB9F4bbC82784Ab6ef8fAA
-            );
-            return true;
-        }
+        // if (getCodeSize(0x146500cfd35B22E4A392Fe0aDc06De1a1368Ed48) > 0) {
+        //     //rinkeby testnet
+        //     OAR = OracleAddrResolverI(
+        //         0x146500cfd35B22E4A392Fe0aDc06De1a1368Ed48
+        //     );
+        //     provable_setNetworkName("eth_rinkeby");
+        //     return true;
+        // }
+        // if (getCodeSize(0xa2998EFD205FB9D4B4963aFb70778D6354ad3A41) > 0) {
+        //     //goerli testnet
+        //     OAR = OracleAddrResolverI(
+        //         0xa2998EFD205FB9D4B4963aFb70778D6354ad3A41
+        //     );
+        //     provable_setNetworkName("eth_goerli");
+        //     return true;
+        // }
+        // if (getCodeSize(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475) > 0) {
+        //     //ethereum-bridge
+        //     OAR = OracleAddrResolverI(
+        //         0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475
+        //     );
+        //     return true;
+        // }
+        // if (getCodeSize(0x20e12A1F859B3FeaE5Fb2A0A32C18F5a65555bBF) > 0) {
+        //     //ether.camp ide
+        //     OAR = OracleAddrResolverI(
+        //         0x20e12A1F859B3FeaE5Fb2A0A32C18F5a65555bBF
+        //     );
+        //     return true;
+        // }
+        // if (getCodeSize(0x51efaF4c8B3C9AfBD5aB9F4bbC82784Ab6ef8fAA) > 0) {
+        //     //browser-solidity
+        //     OAR = OracleAddrResolverI(
+        //         0x51efaF4c8B3C9AfBD5aB9F4bbC82784Ab6ef8fAA
+        //     );
+        //     return true;
+        // }
         return false;
     }
 
     /**
-     * @dev The following `__callback` functions are just placeholders ideally
+     * @dev The following `_callback` functions are just placeholders ideally
      *      meant to be defined in child contract when proofs are used.
      *      The function bodies simply silence compiler warnings.
      */
-    function __callback(bytes32 _myid, string memory _result) public {
-        __callback(_myid, _result, new bytes(0));
+    function callbackIT(bytes32 _myid, string memory _result) public {
+        callbackIT(_myid, _result, new bytes(0));
     }
 
-    function __callback(
+    function callbackIT(
         bytes32 _myid,
         string memory _result,
         bytes memory _proof

@@ -1,6 +1,7 @@
 import { task } from "hardhat/config";
 import "@nomiclabs/hardhat-waffle";
 import '@eth-optimism/plugins/hardhat/compiler'
+import "@nomiclabs/hardhat-etherscan";
 
 import 'dotenv/config'
 
@@ -29,7 +30,16 @@ export default {
       accounts: [process.env.PRIVATE_KEY],
       gasPrice: 0,
       gas: 0
+    },
+    kovan: {
+      url: "https://kovan.infura.io/v3/5299495f325e4eee96df12d5edeaf850",
+      accounts: [process.env.PRIVATE_KEY]
     }
+  },
+  etherscan: {
+    // Your API key for Etherscan
+    // Obtain one at https://etherscan.io/
+    apiKey: process.env.ETHERSCAN_API_KEY
   },
   solidity: "0.5.16",
   ovm: {

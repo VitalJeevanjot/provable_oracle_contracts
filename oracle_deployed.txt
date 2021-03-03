@@ -1,0 +1,24 @@
+Verified:
+
+OraclizeAddrResolver (USING THIS): 0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8
+https://kovan.etherscan.io/address/0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8#code
+
+Oraclize: 0xba39d530016f5b50932faCfFAff16A391f1AFf14
+https://kovan.etherscan.io/address/0xba39d530016f5b50932faCfFAff16A391f1AFf14#code
+
+----------------------------------------------------------
+
+OraclizeAddrResolver: 0x0b4bf391fcfd8eEeF59473De375b518b2EE6A258
+https://kovan.etherscan.io/address/0x0b4bf391fcfd8eEeF59473De375b518b2EE6A258#code
+
+Oraclize: 0xc9c897CB7bE791d5A8602BCD2Ea006084F9C7d9f
+https://kovan.etherscan.io/address/0xc9c897CB7bE791d5A8602BCD2Ea006084F9C7d9f#code
+
+---------------------------------------------------------------
+
+Oraclize: 0xacbC2023D13A825C3D5831CA4c91Eb09B8Cbc0Cc
+https://kovan.etherscan.io/address/0xacbC2023D13A825C3D5831CA4c91Eb09B8Cbc0Cc#code
+---------------------------------------------------------------
+
+Oraclize (USING THIS): 0xc336B284D0aA0C56BB3c3fDAfDDD9222488116a6
+https://kovan.etherscan.io/address/0xc336B284D0aA0C56BB3c3fDAfDDD9222488116a6#code
