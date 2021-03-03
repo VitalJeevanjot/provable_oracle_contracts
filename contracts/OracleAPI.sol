@@ -1,21 +1,22 @@
 // <provableAPI>
-pragma solidity >=0.5.0 <0.6.0; // Incompatible compiler version - please select a compiler within the stated pragma range, or use a different version of the provableAPI!
+
+pragma solidity >0.6.0 <0.8.0; // Incompatible compiler version - please select a compiler within the stated pragma range, or use a different version of the provableAPI!
 
 // Dummy contract only used to emit to end-user they are using wrong solc
-contract solcChecker {
+abstract contract solcChecker {
     /* INCOMPATIBLE SOLC: import the following instead: "github.com/oraclize/ethereum-api/oraclizeAPI_0.4.sol" */
-    function f(bytes calldata x) external;
+    function f(bytes calldata x) external virtual;
 }
 
-contract ProvableI {
-    address public cbAddress;
+interface ProvableI {
+    function cbAddress() external returns (address _cbAddress);
 
     function setProofType(bytes1 _proofType) external;
 
     function setCustomGasPrice(uint256 _gasPrice) external;
 
-    function getPrice(string memory _datasource)
-        public
+    function getPrice(string calldata _datasource)
+        external
         returns (uint256 _dsprice);
 
     function randomDS_getSessionPubKeyHash()
@@ -23,15 +24,15 @@ contract ProvableI {
         view
         returns (bytes32 _sessionKeyHash);
 
-    function getPrice(string memory _datasource, uint256 _gasLimit)
-        public
+    function getPrice(string calldata _datasource, uint256 _gasLimit)
+        external
         returns (uint256 _dsprice);
 
     function queryN(
         uint256 _timestamp,
-        string memory _datasource,
-        bytes memory _argN
-    ) public payable returns (bytes32 _id);
+        string calldata _datasource,
+        bytes calldata _argN
+    ) external payable returns (bytes32 _id);
 
     function query(
         uint256 _timestamp,
@@ -41,10 +42,10 @@ contract ProvableI {
 
     function query2(
         uint256 _timestamp,
-        string memory _datasource,
-        string memory _arg1,
-        string memory _arg2
-    ) public payable returns (bytes32 _id);
+        string calldata _datasource,
+        string calldata _arg1,
+        string calldata _arg2
+    ) external payable returns (bytes32 _id);
 
     function query_withGasLimit(
         uint256 _timestamp,
@@ -69,8 +70,8 @@ contract ProvableI {
     ) external payable returns (bytes32 _id);
 }
 
-contract OracleAddrResolverI {
-    function getAddress() public returns (address _address);
+interface OracleAddrResolverI {
+    function getAddress() external returns (address _address);
 }
 
 /*
@@ -132,7 +133,7 @@ library Buffer {
      *      would exceed the capacity of the buffer.
      * @param _buf The buffer to append to.
      * @param _data The data to append.
-     * @return The original buffer.
+     * @return _buffer The original buffer.
      *
      */
     function append(buffer memory _buf, bytes memory _data)
@@ -176,7 +177,6 @@ library Buffer {
      * exceed the capacity of the buffer.
      * @param _buf The buffer to append to.
      * @param _data The data to append.
-     * @return The original buffer.
      *
      */
     function append(buffer memory _buf, uint8 _data) internal pure {
@@ -198,7 +198,7 @@ library Buffer {
      * exceed the capacity of the buffer.
      * @param _buf The buffer to append to.
      * @param _data The data to append.
-     * @return The original buffer.
+     * @return _buffer The original buffer.
      *
      */
     function appendInt(
@@ -388,28 +388,14 @@ contract usingProvable {
     }
 
     function provable_setNetwork() internal returns (bool _networkSet) {
-        // if (getCodeSize(0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed) > 0) {
-        //     //mainnet
-        //     OAR = OracleAddrResolverI(
-        //         0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed
-        //     );
+        // if (getCodeSize(0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed) > 0) { //mainnet
+        //     OAR = OracleAddrResolverI(0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed);
         //     provable_setNetworkName("eth_mainnet");
         //     return true;
         // }
-        // if (getCodeSize(0xc03A2615D5efaf5F49F60B7BB6583eaec212fdf1) > 0) {
-        //     //ropsten testnet
-        //     OAR = OracleAddrResolverI(
-        //         0xc03A2615D5efaf5F49F60B7BB6583eaec212fdf1
-        //     );
+        // if (getCodeSize(0xc03A2615D5efaf5F49F60B7BB6583eaec212fdf1) > 0) { //ropsten testnet
+        //     OAR = OracleAddrResolverI(0xc03A2615D5efaf5F49F60B7BB6583eaec212fdf1);
         //     provable_setNetworkName("eth_ropsten3");
-        //     return true;
-        // }
-        // if (getCodeSize(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e) > 0) {
-        //     //kovan testnet
-        //     OAR = OracleAddrResolverI(
-        //         0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e
-        //     );
-        //     provable_setNetworkName("eth_kovan");
         //     return true;
         // }
         if (getCodeSize(0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8) > 0) {
@@ -420,60 +406,50 @@ contract usingProvable {
             provable_setNetworkName("eth_kovan");
             return true;
         }
-        // if (getCodeSize(0x146500cfd35B22E4A392Fe0aDc06De1a1368Ed48) > 0) {
-        //     //rinkeby testnet
-        //     OAR = OracleAddrResolverI(
-        //         0x146500cfd35B22E4A392Fe0aDc06De1a1368Ed48
-        //     );
+        // if (getCodeSize(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e) > 0) { //kovan testnet
+        //     OAR = OracleAddrResolverI(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e);
+        //     provable_setNetworkName("eth_kovan");
+        //     return true;
+        // }
+        // if (getCodeSize(0x146500cfd35B22E4A392Fe0aDc06De1a1368Ed48) > 0) { //rinkeby testnet
+        //     OAR = OracleAddrResolverI(0x146500cfd35B22E4A392Fe0aDc06De1a1368Ed48);
         //     provable_setNetworkName("eth_rinkeby");
         //     return true;
         // }
-        // if (getCodeSize(0xa2998EFD205FB9D4B4963aFb70778D6354ad3A41) > 0) {
-        //     //goerli testnet
-        //     OAR = OracleAddrResolverI(
-        //         0xa2998EFD205FB9D4B4963aFb70778D6354ad3A41
-        //     );
+        // if (getCodeSize(0xa2998EFD205FB9D4B4963aFb70778D6354ad3A41) > 0) { //goerli testnet
+        //     OAR = OracleAddrResolverI(0xa2998EFD205FB9D4B4963aFb70778D6354ad3A41);
         //     provable_setNetworkName("eth_goerli");
         //     return true;
         // }
-        // if (getCodeSize(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475) > 0) {
-        //     //ethereum-bridge
-        //     OAR = OracleAddrResolverI(
-        //         0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475
-        //     );
+        // if (getCodeSize(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475) > 0) { //ethereum-bridge
+        //     OAR = OracleAddrResolverI(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475);
         //     return true;
         // }
-        // if (getCodeSize(0x20e12A1F859B3FeaE5Fb2A0A32C18F5a65555bBF) > 0) {
-        //     //ether.camp ide
-        //     OAR = OracleAddrResolverI(
-        //         0x20e12A1F859B3FeaE5Fb2A0A32C18F5a65555bBF
-        //     );
+        // if (getCodeSize(0x20e12A1F859B3FeaE5Fb2A0A32C18F5a65555bBF) > 0) { //ether.camp ide
+        //     OAR = OracleAddrResolverI(0x20e12A1F859B3FeaE5Fb2A0A32C18F5a65555bBF);
         //     return true;
         // }
-        // if (getCodeSize(0x51efaF4c8B3C9AfBD5aB9F4bbC82784Ab6ef8fAA) > 0) {
-        //     //browser-solidity
-        //     OAR = OracleAddrResolverI(
-        //         0x51efaF4c8B3C9AfBD5aB9F4bbC82784Ab6ef8fAA
-        //     );
+        // if (getCodeSize(0x51efaF4c8B3C9AfBD5aB9F4bbC82784Ab6ef8fAA) > 0) { //browser-solidity
+        //     OAR = OracleAddrResolverI(0x51efaF4c8B3C9AfBD5aB9F4bbC82784Ab6ef8fAA);
         //     return true;
         // }
         return false;
     }
 
     /**
-     * @dev The following `_callback` functions are just placeholders ideally
+     * @dev The following `__callback` functions are just placeholders ideally
      *      meant to be defined in child contract when proofs are used.
      *      The function bodies simply silence compiler warnings.
      */
-    function callbackIT(bytes32 _myid, string memory _result) public {
-        callbackIT(_myid, _result, new bytes(0));
+    function __callback(bytes32 _myid, string memory _result) public virtual {
+        __callback(_myid, _result, new bytes(0));
     }
 
-    function callbackIT(
+    function __callback(
         bytes32 _myid,
         string memory _result,
         bytes memory _proof
-    ) public {
+    ) public virtual {
         _myid;
         _result;
         _proof;
@@ -505,7 +481,7 @@ contract usingProvable {
         if (price > 1 ether + tx.gasprice * 200000) {
             return 0; // Unexpectedly high price
         }
-        return provable.query.value(price)(0, _datasource, _arg);
+        return provable.query{value: price}(0, _datasource, _arg);
     }
 
     function provable_query(
@@ -517,7 +493,7 @@ contract usingProvable {
         if (price > 1 ether + tx.gasprice * 200000) {
             return 0; // Unexpectedly high price
         }
-        return provable.query.value(price)(_timestamp, _datasource, _arg);
+        return provable.query{value: price}(_timestamp, _datasource, _arg);
     }
 
     function provable_query(
@@ -531,7 +507,7 @@ contract usingProvable {
             return 0; // Unexpectedly high price
         }
         return
-            provable.query_withGasLimit.value(price)(
+            provable.query_withGasLimit{value: price}(
                 _timestamp,
                 _datasource,
                 _arg,
@@ -549,7 +525,7 @@ contract usingProvable {
             return 0; // Unexpectedly high price
         }
         return
-            provable.query_withGasLimit.value(price)(
+            provable.query_withGasLimit{value: price}(
                 0,
                 _datasource,
                 _arg,
@@ -566,7 +542,7 @@ contract usingProvable {
         if (price > 1 ether + tx.gasprice * 200000) {
             return 0; // Unexpectedly high price
         }
-        return provable.query2.value(price)(0, _datasource, _arg1, _arg2);
+        return provable.query2{value: price}(0, _datasource, _arg1, _arg2);
     }
 
     function provable_query(
@@ -580,7 +556,12 @@ contract usingProvable {
             return 0; // Unexpectedly high price
         }
         return
-            provable.query2.value(price)(_timestamp, _datasource, _arg1, _arg2);
+            provable.query2{value: price}(
+                _timestamp,
+                _datasource,
+                _arg1,
+                _arg2
+            );
     }
 
     function provable_query(
@@ -595,7 +576,7 @@ contract usingProvable {
             return 0; // Unexpectedly high price
         }
         return
-            provable.query2_withGasLimit.value(price)(
+            provable.query2_withGasLimit{value: price}(
                 _timestamp,
                 _datasource,
                 _arg1,
@@ -615,7 +596,7 @@ contract usingProvable {
             return 0; // Unexpectedly high price
         }
         return
-            provable.query2_withGasLimit.value(price)(
+            provable.query2_withGasLimit{value: price}(
                 0,
                 _datasource,
                 _arg1,
@@ -634,7 +615,7 @@ contract usingProvable {
             return 0; // Unexpectedly high price
         }
         bytes memory args = stra2cbor(_argN);
-        return provable.queryN.value(price)(0, _datasource, args);
+        return provable.queryN{value: price}(0, _datasource, args);
     }
 
     function provable_query(
@@ -647,7 +628,7 @@ contract usingProvable {
             return 0; // Unexpectedly high price
         }
         bytes memory args = stra2cbor(_argN);
-        return provable.queryN.value(price)(_timestamp, _datasource, args);
+        return provable.queryN{value: price}(_timestamp, _datasource, args);
     }
 
     function provable_query(
@@ -662,7 +643,7 @@ contract usingProvable {
         }
         bytes memory args = stra2cbor(_argN);
         return
-            provable.queryN_withGasLimit.value(price)(
+            provable.queryN_withGasLimit{value: price}(
                 _timestamp,
                 _datasource,
                 args,
@@ -681,7 +662,7 @@ contract usingProvable {
         }
         bytes memory args = stra2cbor(_argN);
         return
-            provable.queryN_withGasLimit.value(price)(
+            provable.queryN_withGasLimit{value: price}(
                 0,
                 _datasource,
                 args,
@@ -944,7 +925,7 @@ contract usingProvable {
             return 0; // Unexpectedly high price
         }
         bytes memory args = ba2cbor(_argN);
-        return provable.queryN.value(price)(0, _datasource, args);
+        return provable.queryN{value: price}(0, _datasource, args);
     }
 
     function provable_query(
@@ -957,7 +938,7 @@ contract usingProvable {
             return 0; // Unexpectedly high price
         }
         bytes memory args = ba2cbor(_argN);
-        return provable.queryN.value(price)(_timestamp, _datasource, args);
+        return provable.queryN{value: price}(_timestamp, _datasource, args);
     }
 
     function provable_query(
@@ -972,7 +953,7 @@ contract usingProvable {
         }
         bytes memory args = ba2cbor(_argN);
         return
-            provable.queryN_withGasLimit.value(price)(
+            provable.queryN_withGasLimit{value: price}(
                 _timestamp,
                 _datasource,
                 args,
@@ -991,7 +972,7 @@ contract usingProvable {
         }
         bytes memory args = ba2cbor(_argN);
         return
-            provable.queryN_withGasLimit.value(price)(
+            provable.queryN_withGasLimit{value: price}(
                 0,
                 _datasource,
                 args,
@@ -1590,7 +1571,7 @@ contract usingProvable {
             */
             mstore(
                 add(unonce, 0x20),
-                xor(blockhash(sub(number, 1)), xor(coinbase, timestamp))
+                xor(blockhash(sub(number(), 1)), xor(coinbase(), timestamp()))
             )
             mstore(sessionKeyHash, 0x20)
             mstore(add(sessionKeyHash, 0x20), sessionKeyHash_bytes32)
@@ -1976,7 +1957,7 @@ contract usingProvable {
     function safeMemoryCleaner() internal pure {
         assembly {
             let fmem := mload(0x40)
-            codecopy(fmem, codesize, sub(msize, fmem))
+            codecopy(fmem, codesize(), sub(msize(), fmem))
         }
     }
 }

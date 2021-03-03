@@ -1,19 +1,19 @@
-import { task } from "hardhat/config";
+import { HardhatUserConfig } from 'hardhat/types'
 import "@nomiclabs/hardhat-waffle";
-import '@eth-optimism/plugins/hardhat/compiler'
+
+import '@eth-optimism/plugins/hardhat/compiler';
+import '@eth-optimism/plugins/hardhat/ethers';
+
+import '@nomiclabs/hardhat-ethers'
+import '@nomiclabs/hardhat-waffle'
+
 import "@nomiclabs/hardhat-etherscan";
 
 import 'dotenv/config'
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (args, hre) => {
-  const accounts = await hre.ethers.getSigners();
 
-  for (const account of accounts) {
-    console.log(account.address);
-  }
-});
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
@@ -22,14 +22,21 @@ task("accounts", "Prints the list of accounts", async (args, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 
-export default {
-  defaultNetwork: "hardhat",
+const config: HardhatUserConfig = {
   networks: {
     optimism: {
-      url: process.env.L2_NODE_URL || "http://localhost:8545",
-      accounts: [process.env.PRIVATE_KEY],
-      gasPrice: 0,
-      gas: 0
+      chainId: 69,
+      url: "https://kovan.optimism.io/",
+      accounts: ["0xeb9666fa13d4af31414f310a26e9c679c3a762f4eea159e9eea715add926bd8c"],
+      blockGasLimit: 9000000,
+      gasPrice: "auto",
+    },
+    local: {
+      chainId: 69,
+      url: "https://localhost:8545/",
+      accounts: ["0xeb9666fa13d4af31414f310a26e9c679c3a762f4eea159e9eea715add926bd8c"],
+      blockGasLimit: 9000000,
+      gasPrice: "auto",
     },
     kovan: {
       url: "https://kovan.infura.io/v3/5299495f325e4eee96df12d5edeaf850",
@@ -41,8 +48,7 @@ export default {
     // Obtain one at https://etherscan.io/
     apiKey: process.env.ETHERSCAN_API_KEY
   },
-  solidity: "0.5.16",
-  ovm: {
-    solcVersion: '0.5.16' // Your version goes here.
-  }
+  solidity: "0.7.3"
 };
+
+export default config

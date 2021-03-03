@@ -1,3 +1,4 @@
+// @unsupported: ovm
 /**
  *Submitted for verification at Etherscan.io on 2017-10-12
  */
@@ -14,7 +15,7 @@ Oraclize Connector v1.2.0
 // 'compressed' alternative, where all modifiers have been changed to FUNCTIONS
 // which is cheaper for deployment, potentially cheaper execution
 
-pragma solidity >=0.5.0 <0.6.0;
+pragma solidity >0.6.0 <0.8.0;
 
 contract Oraclize {
     mapping(address => uint256) reqc;
@@ -131,7 +132,7 @@ contract Oraclize {
     }
 
     function cbAddress() public view returns (address _cbAddress) {
-        if (cbAddresses[tx.origin] != 0x00) return _cbAddress = tx.origin;
+        if (cbAddresses[msg.sender] != 0x00) return _cbAddress = msg.sender;
     }
 
     function addDSource(string calldata dsname, uint256 multiplier) external {
@@ -145,7 +146,7 @@ contract Oraclize {
     ) public {
         onlyadmin();
         bytes32 dsname_hash = keccak256(abi.encodePacked(dsname, proofType));
-        dsources[dsources.length++] = dsname_hash;
+        dsources.push(dsname_hash);
         price_multiplier[dsname_hash] = multiplier;
     }
 
@@ -157,7 +158,7 @@ contract Oraclize {
         onlyadmin();
         // dsHash -> keccak256(abi.encodePacked(DATASOURCE_NAME, PROOF_TYPE));
         for (uint256 i = 0; i < dsHash.length; i++) {
-            dsources[dsources.length++] = dsHash[i];
+            dsources.push(dsHash[i]);
             price_multiplier[dsHash[i]] = multiplier[i];
         }
     }
@@ -259,7 +260,7 @@ contract Oraclize {
         bytes32[] calldata _newSessionPubKeysHash
     ) external {
         onlyadmin();
-        randomDS_sessionPubKeysHash.length = 0;
+        delete randomDS_sessionPubKeysHash;
         for (uint256 i = 0; i < _newSessionPubKeysHash.length; i++)
             randomDS_sessionPubKeysHash.push(_newSessionPubKeysHash[i]);
     }
@@ -311,7 +312,7 @@ contract Oraclize {
             ((_gaslimit <= 200000) &&
                 (reqc[_addr] == 0) &&
                 (gasprice_ <= gasprice) &&
-                (tx.origin != cbAddress()))
+                (msg.sender != cbAddress()))
         ) return 0;
 
         if (gasprice_ == 0) gasprice_ = gasprice;
@@ -446,8 +447,10 @@ contract Oraclize {
         uint256 _gaslimit
     ) public payable returns (bytes32 _id) {
         costs(_datasource, _gaslimit);
-        if ((_timestamp > now + 3600 * 24 * 60) || (_gaslimit > block.gaslimit))
-            revert();
+        if (
+            (_timestamp > block.timestamp + 3600 * 24 * 60) ||
+            (_gaslimit > block.gaslimit)
+        ) revert();
 
         _id = keccak256(abi.encodePacked(this, msg.sender, reqc[msg.sender]));
         reqc[msg.sender]++;
@@ -472,8 +475,10 @@ contract Oraclize {
         uint256 _gaslimit
     ) public payable returns (bytes32 _id) {
         costs(_datasource, _gaslimit);
-        if ((_timestamp > now + 3600 * 24 * 60) || (_gaslimit > block.gaslimit))
-            revert();
+        if (
+            (_timestamp > block.timestamp + 3600 * 24 * 60) ||
+            (_gaslimit > block.gaslimit)
+        ) revert();
 
         _id = keccak256(abi.encodePacked(this, msg.sender, reqc[msg.sender]));
         reqc[msg.sender]++;
@@ -498,8 +503,10 @@ contract Oraclize {
         uint256 _gaslimit
     ) public payable returns (bytes32 _id) {
         costs(_datasource, _gaslimit);
-        if ((_timestamp > now + 3600 * 24 * 60) || (_gaslimit > block.gaslimit))
-            revert();
+        if (
+            (_timestamp > block.timestamp + 3600 * 24 * 60) ||
+            (_gaslimit > block.gaslimit)
+        ) revert();
 
         _id = keccak256(abi.encodePacked(this, msg.sender, reqc[msg.sender]));
         reqc[msg.sender]++;
@@ -525,9 +532,9 @@ contract Oraclize {
     ) public payable returns (bytes32 _id) {
         costs(_datasource, _gaslimit);
         if (
-            (_timestamp > now + 3600 * 24 * 60) ||
+            (_timestamp > block.timestamp + 3600 * 24 * 60) ||
             (_gaslimit > block.gaslimit) ||
-            address(_fnc) != msg.sender
+            _fnc.address != msg.sender
         ) revert();
 
         _id = keccak256(abi.encodePacked(this, msg.sender, reqc[msg.sender]));
@@ -556,9 +563,9 @@ contract Oraclize {
     ) public payable returns (bytes32 _id) {
         costs(_datasource, _gaslimit);
         if (
-            (_timestamp > now + 3600 * 24 * 60) ||
+            (_timestamp > block.timestamp + 3600 * 24 * 60) ||
             (_gaslimit > block.gaslimit) ||
-            address(_fnc) != msg.sender
+            _fnc.address != msg.sender
         ) revert();
 
         _id = keccak256(abi.encodePacked(this, msg.sender, reqc[msg.sender]));
@@ -587,9 +594,9 @@ contract Oraclize {
     ) public payable returns (bytes32 _id) {
         costs(_datasource, _gaslimit);
         if (
-            (_timestamp > now + 3600 * 24 * 60) ||
+            (_timestamp > block.timestamp + 3600 * 24 * 60) ||
             (_gaslimit > block.gaslimit) ||
-            address(_fnc) != msg.sender
+            _fnc.address != msg.sender
         ) revert();
 
         _id = keccak256(abi.encodePacked(this, msg.sender, reqc[msg.sender]));
