@@ -36,26 +36,15 @@ async function main () {
   // // await hre.run('compile');
 
   // // We get the contract to deploy
-  const OraclizeAddrResolver = await hre.ethers.getContractFactory("OraclizeAddrResolver");
-  const oraclizeAddrResolver = await OraclizeAddrResolver.deploy();
-  console.log("oraclizeAddrResolver deployed to:", oraclizeAddrResolver.address);
-
-  const Oracle = await hre.ethers.getContractFactory("Oraclize");
-  const oracle = await Oracle.deploy();
-  console.log("oracle connector deployed to:", oracle.address);
-
+  const OracleCall = await hre.ethers.getContractFactory("APIConsumer");
+  const oracleCall = await OracleCall.deploy();
+  console.log("oracleCall deployed to:", oracleCall.address);
 
   setTimeout(async function () {
     await hre.run("verify:verify", {
-      address: oraclizeAddrResolver.address
-    })
-    await hre.run("verify:verify", {
-      address: oracle.address
+      address: oracleCall.address
     })
   }, 5000);
-  await oraclizeAddrResolver.setAddr(oracle.address)
-  await oracle.addCbAddress("0x7762c9dD7380d715FF10F90b2F7fb9c64FB1C670", 0x10)
-
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -308,7 +308,7 @@ library CBOR {
 /*
 End solidity-cborutils
 */
-contract usingProvable {
+contract onSayNetwork {
     using CBOR for Buffer.buffer;
 
     ProvableI provable;
@@ -398,14 +398,22 @@ contract usingProvable {
         //     provable_setNetworkName("eth_ropsten3");
         //     return true;
         // }
-        if (getCodeSize(0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8) > 0) {
-            //kovan testnet
+        if (getCodeSize(0x2239A0C271259fb212909d5598844A32D040332B) > 0) {
+            // bsc testnet
             OAR = OracleAddrResolverI(
-                0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8
+                0x2239A0C271259fb212909d5598844A32D040332B
             );
-            provable_setNetworkName("eth_kovan");
+            provable_setNetworkName("bsc_testnet");
             return true;
         }
+        // if (getCodeSize(0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8) > 0) {
+        //     // kovan testnet
+        //     OAR = OracleAddrResolverI(
+        //         0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8
+        //     );
+        //     provable_setNetworkName("eth_kovan");
+        //     return true;
+        // }
         // if (getCodeSize(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e) > 0) { //kovan testnet
         //     OAR = OracleAddrResolverI(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e);
         //     provable_setNetworkName("eth_kovan");

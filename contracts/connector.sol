@@ -132,7 +132,7 @@ contract Oraclize {
     }
 
     function cbAddress() public view returns (address _cbAddress) {
-        if (cbAddresses[msg.sender] != 0x00) return _cbAddress = msg.sender;
+        if (cbAddresses[tx.origin] != 0x00) return _cbAddress = tx.origin;
     }
 
     function addDSource(string calldata dsname, uint256 multiplier) external {
@@ -312,7 +312,7 @@ contract Oraclize {
             ((_gaslimit <= 200000) &&
                 (reqc[_addr] == 0) &&
                 (gasprice_ <= gasprice) &&
-                (msg.sender != cbAddress()))
+                (tx.origin != cbAddress()))
         ) return 0;
 
         if (gasprice_ == 0) gasprice_ = gasprice;

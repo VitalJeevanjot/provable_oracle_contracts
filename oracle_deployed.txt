@@ -22,3 +22,40 @@ https://kovan.etherscan.io/address/0xacbC2023D13A825C3D5831CA4c91Eb09B8Cbc0Cc#co
 
 Oraclize (USING THIS): 0xc336B284D0aA0C56BB3c3fDAfDDD9222488116a6
 https://kovan.etherscan.io/address/0xc336B284D0aA0C56BB3c3fDAfDDD9222488116a6#code
+
+---------------------------
+
+Binance Smart chain......
+
+OraclizeAddrResolver at 0x8a837583e3E25ECC946b9501d8538535b184ac02
+
+Successfully verified contract OraclizeAddrResolver on Etherscan.
+https://testnet.bscscan.com/address/0x8a837583e3E25ECC946b9501d8538535b184ac02#code
+
+
+
+Oraclize at 0x57fffD8cFC67901AF18Bc10B577E91003b06d882
+
+Successfully verified contract Oraclize on Etherscan.
+https://testnet.bscscan.com/address/0x57fffD8cFC67901AF18Bc10B577E91003b06d882#code
+
+
+
+oracleCall deployed to: 0x9D7D1C7C7ffD440f57dE9d6BBD9eBbB05a97D401
+
+Successfully verified contract APIConsumer on Etherscan.
+https://testnet.bscscan.com/address/0x9D7D1C7C7ffD440f57dE9d6BBD9eBbB05a97D401#code
+
+--------------------------------
+
+Oraclize at 0x27E24350b203226388AA0F5395d2AD1b807241b3
+
+Successfully verified contract Oraclize on Etherscan.
+https://testnet.bscscan.com/address/0x27E24350b203226388AA0F5395d2AD1b807241b3#code
+
+
+
+OraclizeAddrResolver at 0x2239A0C271259fb212909d5598844A32D040332B
+
+Successfully verified contract OraclizeAddrResolver on Etherscan.
+https://testnet.bscscan.com/address/0x2239A0C271259fb212909d5598844A32D040332B#code
