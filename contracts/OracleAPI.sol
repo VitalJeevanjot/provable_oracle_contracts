@@ -1,4 +1,4 @@
-// <provableAPI>
+// <SayNetworkAPI>
 
 pragma solidity >0.6.0 <0.8.0; // Incompatible compiler version - please select a compiler within the stated pragma range, or use a different version of the provableAPI!
 
@@ -325,19 +325,19 @@ contract onSayNetwork {
     bytes1 constant proofType_Android = 0x40;
     bytes1 constant proofType_TLSNotary = 0x10;
 
-    string provable_network_name;
+    string say_network_name;
     uint8 constant networkID_auto = 0;
     uint8 constant networkID_morden = 2;
     uint8 constant networkID_mainnet = 1;
     uint8 constant networkID_testnet = 2;
     uint8 constant networkID_consensys = 161;
 
-    mapping(bytes32 => bytes32) provable_randomDS_args;
-    mapping(bytes32 => bool) provable_randomDS_sessionKeysHashVerified;
+    mapping(bytes32 => bytes32) say_randomDS_args;
+    mapping(bytes32 => bool) say_randomDS_sessionKeysHashVerified;
 
     modifier provableAPI {
         if ((address(OAR) == address(0)) || (getCodeSize(address(OAR)) == 0)) {
-            provable_setNetwork(networkID_auto);
+            say_setNetwork(networkID_auto);
         }
         if (address(provable) != OAR.getAddress()) {
             provable = ProvableI(OAR.getAddress());
@@ -345,7 +345,7 @@ contract onSayNetwork {
         _;
     }
 
-    modifier provable_randomDS_proofVerify(
+    modifier say_randomDS_proofVerify(
         bytes32 _queryId,
         string memory _result,
         bytes memory _proof
@@ -357,45 +357,45 @@ contract onSayNetwork {
                 (uint8(_proof[2]) == uint8(1))
         );
         bool proofVerified =
-            provable_randomDS_proofVerify__main(
+            say_randomDS_proofVerify__main(
                 _proof,
                 _queryId,
                 bytes(_result),
-                provable_getNetworkName()
+                say_getNetworkName()
             );
         require(proofVerified);
         _;
     }
 
-    function provable_setNetwork(uint8 _networkID)
+    function say_setNetwork(uint8 _networkID)
         internal
         returns (bool _networkSet)
     {
         _networkID; // NOTE: Silence the warning and remain backwards compatible
-        return provable_setNetwork();
+        return say_setNetwork();
     }
 
-    function provable_setNetworkName(string memory _network_name) internal {
-        provable_network_name = _network_name;
+    function say_setNetworkName(string memory _network_name) internal {
+        say_network_name = _network_name;
     }
 
-    function provable_getNetworkName()
+    function say_getNetworkName()
         internal
         view
         returns (string memory _networkName)
     {
-        return provable_network_name;
+        return say_network_name;
     }
 
-    function provable_setNetwork() internal returns (bool _networkSet) {
+    function say_setNetwork() internal returns (bool _networkSet) {
         // if (getCodeSize(0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed) > 0) { //mainnet
         //     OAR = OracleAddrResolverI(0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed);
-        //     provable_setNetworkName("eth_mainnet");
+        //     say_setNetworkName("eth_mainnet");
         //     return true;
         // }
         // if (getCodeSize(0xc03A2615D5efaf5F49F60B7BB6583eaec212fdf1) > 0) { //ropsten testnet
         //     OAR = OracleAddrResolverI(0xc03A2615D5efaf5F49F60B7BB6583eaec212fdf1);
-        //     provable_setNetworkName("eth_ropsten3");
+        //     say_setNetworkName("eth_ropsten3");
         //     return true;
         // }
         if (getCodeSize(0x2239A0C271259fb212909d5598844A32D040332B) > 0) {
@@ -403,7 +403,7 @@ contract onSayNetwork {
             OAR = OracleAddrResolverI(
                 0x2239A0C271259fb212909d5598844A32D040332B
             );
-            provable_setNetworkName("bsc_testnet");
+            say_setNetworkName("bsc_testnet");
             return true;
         }
         // if (getCodeSize(0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8) > 0) {
@@ -411,22 +411,22 @@ contract onSayNetwork {
         //     OAR = OracleAddrResolverI(
         //         0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8
         //     );
-        //     provable_setNetworkName("eth_kovan");
+        //     say_setNetworkName("eth_kovan");
         //     return true;
         // }
         // if (getCodeSize(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e) > 0) { //kovan testnet
         //     OAR = OracleAddrResolverI(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e);
-        //     provable_setNetworkName("eth_kovan");
+        //     say_setNetworkName("eth_kovan");
         //     return true;
         // }
         // if (getCodeSize(0x146500cfd35B22E4A392Fe0aDc06De1a1368Ed48) > 0) { //rinkeby testnet
         //     OAR = OracleAddrResolverI(0x146500cfd35B22E4A392Fe0aDc06De1a1368Ed48);
-        //     provable_setNetworkName("eth_rinkeby");
+        //     say_setNetworkName("eth_rinkeby");
         //     return true;
         // }
         // if (getCodeSize(0xa2998EFD205FB9D4B4963aFb70778D6354ad3A41) > 0) { //goerli testnet
         //     OAR = OracleAddrResolverI(0xa2998EFD205FB9D4B4963aFb70778D6354ad3A41);
-        //     provable_setNetworkName("eth_goerli");
+        //     say_setNetworkName("eth_goerli");
         //     return true;
         // }
         // if (getCodeSize(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475) > 0) { //ethereum-bridge
@@ -449,22 +449,22 @@ contract onSayNetwork {
      *      meant to be defined in child contract when proofs are used.
      *      The function bodies simply silence compiler warnings.
      */
-    function __callback(bytes32 _myid, string memory _result) public virtual {
-        __callback(_myid, _result, new bytes(0));
-    }
+    // function __callback(bytes32 _myid, string memory _result) public virtual {
+    //     __callback(_myid, _result, new bytes(0));
+    // }
 
-    function __callback(
-        bytes32 _myid,
-        string memory _result,
-        bytes memory _proof
-    ) public virtual {
-        _myid;
-        _result;
-        _proof;
-        provable_randomDS_args[bytes32(0)] = bytes32(0);
-    }
+    // function __callback(
+    //     bytes32 _myid,
+    //     string memory _result,
+    //     bytes memory _proof
+    // ) public virtual {
+    //     _myid;
+    //     _result;
+    //     _proof;
+    //     say_randomDS_args[bytes32(0)] = bytes32(0);
+    // }
 
-    function provable_getPrice(string memory _datasource)
+    function say_getPrice(string memory _datasource)
         internal
         provableAPI
         returns (uint256 _queryPrice)
@@ -472,7 +472,7 @@ contract onSayNetwork {
         return provable.getPrice(_datasource);
     }
 
-    function provable_getPrice(string memory _datasource, uint256 _gasLimit)
+    function say_getPrice(string memory _datasource, uint256 _gasLimit)
         internal
         provableAPI
         returns (uint256 _queryPrice)
@@ -480,7 +480,7 @@ contract onSayNetwork {
         return provable.getPrice(_datasource, _gasLimit);
     }
 
-    function provable_query(string memory _datasource, string memory _arg)
+    function say_query(string memory _datasource, string memory _arg)
         internal
         provableAPI
         returns (bytes32 _id)
@@ -492,7 +492,7 @@ contract onSayNetwork {
         return provable.query{value: price}(0, _datasource, _arg);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string memory _arg
@@ -504,7 +504,7 @@ contract onSayNetwork {
         return provable.query{value: price}(_timestamp, _datasource, _arg);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string memory _arg,
@@ -523,7 +523,7 @@ contract onSayNetwork {
             );
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         string memory _arg,
         uint256 _gasLimit
@@ -541,7 +541,7 @@ contract onSayNetwork {
             );
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         string memory _arg1,
         string memory _arg2
@@ -553,7 +553,7 @@ contract onSayNetwork {
         return provable.query2{value: price}(0, _datasource, _arg1, _arg2);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string memory _arg1,
@@ -572,7 +572,7 @@ contract onSayNetwork {
             );
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string memory _arg1,
@@ -593,7 +593,7 @@ contract onSayNetwork {
             );
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         string memory _arg1,
         string memory _arg2,
@@ -613,7 +613,7 @@ contract onSayNetwork {
             );
     }
 
-    function provable_query(string memory _datasource, string[] memory _argN)
+    function say_query(string memory _datasource, string[] memory _argN)
         internal
         provableAPI
         returns (bytes32 _id)
@@ -626,7 +626,7 @@ contract onSayNetwork {
         return provable.queryN{value: price}(0, _datasource, args);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string[] memory _argN
@@ -639,7 +639,7 @@ contract onSayNetwork {
         return provable.queryN{value: price}(_timestamp, _datasource, args);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string[] memory _argN,
@@ -659,7 +659,7 @@ contract onSayNetwork {
             );
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         string[] memory _argN,
         uint256 _gasLimit
@@ -678,27 +678,27 @@ contract onSayNetwork {
             );
     }
 
-    function provable_query(string memory _datasource, string[1] memory _args)
+    function say_query(string memory _datasource, string[1] memory _args)
         internal
         provableAPI
         returns (bytes32 _id)
     {
         string[] memory dynargs = new string[](1);
         dynargs[0] = _args[0];
-        return provable_query(_datasource, dynargs);
+        return say_query(_datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string[1] memory _args
     ) internal provableAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](1);
         dynargs[0] = _args[0];
-        return provable_query(_timestamp, _datasource, dynargs);
+        return say_query(_timestamp, _datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string[1] memory _args,
@@ -706,20 +706,20 @@ contract onSayNetwork {
     ) internal provableAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](1);
         dynargs[0] = _args[0];
-        return provable_query(_timestamp, _datasource, dynargs, _gasLimit);
+        return say_query(_timestamp, _datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         string[1] memory _args,
         uint256 _gasLimit
     ) internal provableAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](1);
         dynargs[0] = _args[0];
-        return provable_query(_datasource, dynargs, _gasLimit);
+        return say_query(_datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(string memory _datasource, string[2] memory _args)
+    function say_query(string memory _datasource, string[2] memory _args)
         internal
         provableAPI
         returns (bytes32 _id)
@@ -727,10 +727,10 @@ contract onSayNetwork {
         string[] memory dynargs = new string[](2);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
-        return provable_query(_datasource, dynargs);
+        return say_query(_datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string[2] memory _args
@@ -738,10 +738,10 @@ contract onSayNetwork {
         string[] memory dynargs = new string[](2);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
-        return provable_query(_timestamp, _datasource, dynargs);
+        return say_query(_timestamp, _datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string[2] memory _args,
@@ -750,10 +750,10 @@ contract onSayNetwork {
         string[] memory dynargs = new string[](2);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
-        return provable_query(_timestamp, _datasource, dynargs, _gasLimit);
+        return say_query(_timestamp, _datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         string[2] memory _args,
         uint256 _gasLimit
@@ -761,10 +761,10 @@ contract onSayNetwork {
         string[] memory dynargs = new string[](2);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
-        return provable_query(_datasource, dynargs, _gasLimit);
+        return say_query(_datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(string memory _datasource, string[3] memory _args)
+    function say_query(string memory _datasource, string[3] memory _args)
         internal
         provableAPI
         returns (bytes32 _id)
@@ -773,10 +773,10 @@ contract onSayNetwork {
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
-        return provable_query(_datasource, dynargs);
+        return say_query(_datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string[3] memory _args
@@ -785,10 +785,10 @@ contract onSayNetwork {
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
-        return provable_query(_timestamp, _datasource, dynargs);
+        return say_query(_timestamp, _datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string[3] memory _args,
@@ -798,10 +798,10 @@ contract onSayNetwork {
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
-        return provable_query(_timestamp, _datasource, dynargs, _gasLimit);
+        return say_query(_timestamp, _datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         string[3] memory _args,
         uint256 _gasLimit
@@ -810,10 +810,10 @@ contract onSayNetwork {
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
-        return provable_query(_datasource, dynargs, _gasLimit);
+        return say_query(_datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(string memory _datasource, string[4] memory _args)
+    function say_query(string memory _datasource, string[4] memory _args)
         internal
         provableAPI
         returns (bytes32 _id)
@@ -823,10 +823,10 @@ contract onSayNetwork {
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
-        return provable_query(_datasource, dynargs);
+        return say_query(_datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string[4] memory _args
@@ -836,10 +836,10 @@ contract onSayNetwork {
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
-        return provable_query(_timestamp, _datasource, dynargs);
+        return say_query(_timestamp, _datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string[4] memory _args,
@@ -850,10 +850,10 @@ contract onSayNetwork {
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
-        return provable_query(_timestamp, _datasource, dynargs, _gasLimit);
+        return say_query(_timestamp, _datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         string[4] memory _args,
         uint256 _gasLimit
@@ -863,10 +863,10 @@ contract onSayNetwork {
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
-        return provable_query(_datasource, dynargs, _gasLimit);
+        return say_query(_datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(string memory _datasource, string[5] memory _args)
+    function say_query(string memory _datasource, string[5] memory _args)
         internal
         provableAPI
         returns (bytes32 _id)
@@ -877,10 +877,10 @@ contract onSayNetwork {
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
         dynargs[4] = _args[4];
-        return provable_query(_datasource, dynargs);
+        return say_query(_datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string[5] memory _args
@@ -891,10 +891,10 @@ contract onSayNetwork {
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
         dynargs[4] = _args[4];
-        return provable_query(_timestamp, _datasource, dynargs);
+        return say_query(_timestamp, _datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string[5] memory _args,
@@ -906,10 +906,10 @@ contract onSayNetwork {
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
         dynargs[4] = _args[4];
-        return provable_query(_timestamp, _datasource, dynargs, _gasLimit);
+        return say_query(_timestamp, _datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         string[5] memory _args,
         uint256 _gasLimit
@@ -920,10 +920,10 @@ contract onSayNetwork {
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
         dynargs[4] = _args[4];
-        return provable_query(_datasource, dynargs, _gasLimit);
+        return say_query(_datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(string memory _datasource, bytes[] memory _argN)
+    function say_query(string memory _datasource, bytes[] memory _argN)
         internal
         provableAPI
         returns (bytes32 _id)
@@ -936,7 +936,7 @@ contract onSayNetwork {
         return provable.queryN{value: price}(0, _datasource, args);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         bytes[] memory _argN
@@ -949,7 +949,7 @@ contract onSayNetwork {
         return provable.queryN{value: price}(_timestamp, _datasource, args);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         bytes[] memory _argN,
@@ -969,7 +969,7 @@ contract onSayNetwork {
             );
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         bytes[] memory _argN,
         uint256 _gasLimit
@@ -988,27 +988,27 @@ contract onSayNetwork {
             );
     }
 
-    function provable_query(string memory _datasource, bytes[1] memory _args)
+    function say_query(string memory _datasource, bytes[1] memory _args)
         internal
         provableAPI
         returns (bytes32 _id)
     {
         bytes[] memory dynargs = new bytes[](1);
         dynargs[0] = _args[0];
-        return provable_query(_datasource, dynargs);
+        return say_query(_datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         bytes[1] memory _args
     ) internal provableAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](1);
         dynargs[0] = _args[0];
-        return provable_query(_timestamp, _datasource, dynargs);
+        return say_query(_timestamp, _datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         bytes[1] memory _args,
@@ -1016,20 +1016,20 @@ contract onSayNetwork {
     ) internal provableAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](1);
         dynargs[0] = _args[0];
-        return provable_query(_timestamp, _datasource, dynargs, _gasLimit);
+        return say_query(_timestamp, _datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         bytes[1] memory _args,
         uint256 _gasLimit
     ) internal provableAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](1);
         dynargs[0] = _args[0];
-        return provable_query(_datasource, dynargs, _gasLimit);
+        return say_query(_datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(string memory _datasource, bytes[2] memory _args)
+    function say_query(string memory _datasource, bytes[2] memory _args)
         internal
         provableAPI
         returns (bytes32 _id)
@@ -1037,10 +1037,10 @@ contract onSayNetwork {
         bytes[] memory dynargs = new bytes[](2);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
-        return provable_query(_datasource, dynargs);
+        return say_query(_datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         bytes[2] memory _args
@@ -1048,10 +1048,10 @@ contract onSayNetwork {
         bytes[] memory dynargs = new bytes[](2);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
-        return provable_query(_timestamp, _datasource, dynargs);
+        return say_query(_timestamp, _datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         bytes[2] memory _args,
@@ -1060,10 +1060,10 @@ contract onSayNetwork {
         bytes[] memory dynargs = new bytes[](2);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
-        return provable_query(_timestamp, _datasource, dynargs, _gasLimit);
+        return say_query(_timestamp, _datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         bytes[2] memory _args,
         uint256 _gasLimit
@@ -1071,10 +1071,10 @@ contract onSayNetwork {
         bytes[] memory dynargs = new bytes[](2);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
-        return provable_query(_datasource, dynargs, _gasLimit);
+        return say_query(_datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(string memory _datasource, bytes[3] memory _args)
+    function say_query(string memory _datasource, bytes[3] memory _args)
         internal
         provableAPI
         returns (bytes32 _id)
@@ -1083,10 +1083,10 @@ contract onSayNetwork {
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
-        return provable_query(_datasource, dynargs);
+        return say_query(_datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         bytes[3] memory _args
@@ -1095,10 +1095,10 @@ contract onSayNetwork {
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
-        return provable_query(_timestamp, _datasource, dynargs);
+        return say_query(_timestamp, _datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         bytes[3] memory _args,
@@ -1108,10 +1108,10 @@ contract onSayNetwork {
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
-        return provable_query(_timestamp, _datasource, dynargs, _gasLimit);
+        return say_query(_timestamp, _datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         bytes[3] memory _args,
         uint256 _gasLimit
@@ -1120,10 +1120,10 @@ contract onSayNetwork {
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
-        return provable_query(_datasource, dynargs, _gasLimit);
+        return say_query(_datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(string memory _datasource, bytes[4] memory _args)
+    function say_query(string memory _datasource, bytes[4] memory _args)
         internal
         provableAPI
         returns (bytes32 _id)
@@ -1133,10 +1133,10 @@ contract onSayNetwork {
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
-        return provable_query(_datasource, dynargs);
+        return say_query(_datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         bytes[4] memory _args
@@ -1146,10 +1146,10 @@ contract onSayNetwork {
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
-        return provable_query(_timestamp, _datasource, dynargs);
+        return say_query(_timestamp, _datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         bytes[4] memory _args,
@@ -1160,10 +1160,10 @@ contract onSayNetwork {
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
-        return provable_query(_timestamp, _datasource, dynargs, _gasLimit);
+        return say_query(_timestamp, _datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         bytes[4] memory _args,
         uint256 _gasLimit
@@ -1173,10 +1173,10 @@ contract onSayNetwork {
         dynargs[1] = _args[1];
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
-        return provable_query(_datasource, dynargs, _gasLimit);
+        return say_query(_datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(string memory _datasource, bytes[5] memory _args)
+    function say_query(string memory _datasource, bytes[5] memory _args)
         internal
         provableAPI
         returns (bytes32 _id)
@@ -1187,10 +1187,10 @@ contract onSayNetwork {
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
         dynargs[4] = _args[4];
-        return provable_query(_datasource, dynargs);
+        return say_query(_datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         bytes[5] memory _args
@@ -1201,10 +1201,10 @@ contract onSayNetwork {
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
         dynargs[4] = _args[4];
-        return provable_query(_timestamp, _datasource, dynargs);
+        return say_query(_timestamp, _datasource, dynargs);
     }
 
-    function provable_query(
+    function say_query(
         uint256 _timestamp,
         string memory _datasource,
         bytes[5] memory _args,
@@ -1216,10 +1216,10 @@ contract onSayNetwork {
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
         dynargs[4] = _args[4];
-        return provable_query(_timestamp, _datasource, dynargs, _gasLimit);
+        return say_query(_timestamp, _datasource, dynargs, _gasLimit);
     }
 
-    function provable_query(
+    function say_query(
         string memory _datasource,
         bytes[5] memory _args,
         uint256 _gasLimit
@@ -1230,14 +1230,14 @@ contract onSayNetwork {
         dynargs[2] = _args[2];
         dynargs[3] = _args[3];
         dynargs[4] = _args[4];
-        return provable_query(_datasource, dynargs, _gasLimit);
+        return say_query(_datasource, dynargs, _gasLimit);
     }
 
-    function provable_setProof(bytes1 _proofP) internal provableAPI {
+    function say_setProof(bytes1 _proofP) internal provableAPI {
         return provable.setProofType(_proofP);
     }
 
-    function provable_cbAddress()
+    function say_cbAddress()
         internal
         provableAPI
         returns (address _callbackAddress)
@@ -1251,14 +1251,11 @@ contract onSayNetwork {
         }
     }
 
-    function provable_setCustomGasPrice(uint256 _gasPrice)
-        internal
-        provableAPI
-    {
+    function say_setCustomGasPrice(uint256 _gasPrice) internal provableAPI {
         return provable.setCustomGasPrice(_gasPrice);
     }
 
-    function provable_randomDS_getSessionPubKeyHash()
+    function say_randomDS_getSessionPubKeyHash()
         internal
         provableAPI
         returns (bytes32 _sessionKeyHash)
@@ -1557,7 +1554,7 @@ contract onSayNetwork {
         return buf.buf;
     }
 
-    function provable_newRandomDSQuery(
+    function say_newRandomDSQuery(
         uint256 _delay,
         uint256 _nbytes,
         uint256 _customGasLimit
@@ -1568,8 +1565,7 @@ contract onSayNetwork {
         nbytes[0] = bytes1(uint8(_nbytes));
         bytes memory unonce = new bytes(32);
         bytes memory sessionKeyHash = new bytes(32);
-        bytes32 sessionKeyHash_bytes32 =
-            provable_randomDS_getSessionPubKeyHash();
+        bytes32 sessionKeyHash_bytes32 = say_randomDS_getSessionPubKeyHash();
         assembly {
             mstore(unonce, 0x20)
             /*
@@ -1591,7 +1587,7 @@ contract onSayNetwork {
         bytes memory delay_bytes8 = new bytes(8);
         copyBytes(delay, 24, 8, delay_bytes8, 0);
         bytes[4] memory args = [unonce, nbytes, sessionKeyHash, delay];
-        bytes32 queryId = provable_query("random", args, _customGasLimit);
+        bytes32 queryId = say_query("random", args, _customGasLimit);
         bytes memory delay_bytes8_left = new bytes(8);
         assembly {
             let x := mload(add(delay_bytes8, 0x20))
@@ -1643,7 +1639,7 @@ contract onSayNetwork {
                 div(x, 0x1000000000000000000000000000000000000000000000000)
             )
         }
-        provable_randomDS_setCommitment(
+        say_randomDS_setCommitment(
             queryId,
             keccak256(
                 abi.encodePacked(
@@ -1657,11 +1653,10 @@ contract onSayNetwork {
         return queryId;
     }
 
-    function provable_randomDS_setCommitment(
-        bytes32 _queryId,
-        bytes32 _commitment
-    ) internal {
-        provable_randomDS_args[_queryId] = _commitment;
+    function say_randomDS_setCommitment(bytes32 _queryId, bytes32 _commitment)
+        internal
+    {
+        say_randomDS_args[_queryId] = _commitment;
     }
 
     function verifySig(
@@ -1698,7 +1693,7 @@ contract onSayNetwork {
         }
     }
 
-    function provable_randomDS_proofVerify__sessionKeyValidity(
+    function say_randomDS_proofVerify__sessionKeyValidity(
         bytes memory _proof,
         uint256 _sig2offset
     ) internal returns (bool _proofVerified) {
@@ -1731,7 +1726,7 @@ contract onSayNetwork {
         return sigok;
     }
 
-    function provable_randomDS_proofVerify__returnCode(
+    function say_randomDS_proofVerify__returnCode(
         bytes32 _queryId,
         string memory _result,
         bytes memory _proof
@@ -1745,11 +1740,11 @@ contract onSayNetwork {
             return 1;
         }
         bool proofVerified =
-            provable_randomDS_proofVerify__main(
+            say_randomDS_proofVerify__main(
                 _proof,
                 _queryId,
                 bytes(_result),
-                provable_getNetworkName()
+                say_getNetworkName()
             );
         if (!proofVerified) {
             return 2;
@@ -1772,7 +1767,7 @@ contract onSayNetwork {
         return match_;
     }
 
-    function provable_randomDS_proofVerify__main(
+    function say_randomDS_proofVerify__main(
         bytes memory _proof,
         bytes32 _queryId,
         bytes memory _result,
@@ -1832,11 +1827,11 @@ contract onSayNetwork {
         copyBytes(_proof, sig2offset - 64, 64, sessionPubkey, 0);
         bytes32 sessionPubkeyHash = sha256(sessionPubkey);
         if (
-            provable_randomDS_args[_queryId] ==
+            say_randomDS_args[_queryId] ==
             keccak256(abi.encodePacked(commitmentSlice1, sessionPubkeyHash))
         ) {
             //unonce, nbytes and sessionKeyHash match
-            delete provable_randomDS_args[_queryId];
+            delete say_randomDS_args[_queryId];
         } else return false;
         // Random DS Proof Step 5: Validity verification for sig1 (keyhash and args signed with the sessionKey)
         bytes memory tosign1 = new bytes(32 + 8 + 1 + 32);
@@ -1845,15 +1840,15 @@ contract onSayNetwork {
             return false;
         }
         // Verify if sessionPubkeyHash was verified already, if not.. let's do it!
-        if (!provable_randomDS_sessionKeysHashVerified[sessionPubkeyHash]) {
-            provable_randomDS_sessionKeysHashVerified[
+        if (!say_randomDS_sessionKeysHashVerified[sessionPubkeyHash]) {
+            say_randomDS_sessionKeysHashVerified[
                 sessionPubkeyHash
-            ] = provable_randomDS_proofVerify__sessionKeyValidity(
+            ] = say_randomDS_proofVerify__sessionKeyValidity(
                 _proof,
                 sig2offset
             );
         }
-        return provable_randomDS_sessionKeysHashVerified[sessionPubkeyHash];
+        return say_randomDS_sessionKeysHashVerified[sessionPubkeyHash];
     }
 
     /*
@@ -1969,4 +1964,4 @@ contract onSayNetwork {
         }
     }
 }
-// </provableAPI>
+// </SayNetworkAPI>

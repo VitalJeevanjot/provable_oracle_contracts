@@ -38,10 +38,7 @@ contract APIConsumer is onSayNetwork {
         }
     }
 
-    function __callback(bytes32 _requestId, string memory curr_price)
-        public
-        override
-    {
+    function __callback(bytes32 _requestId, string memory curr_price) public {
         cb_address = provable_cbAddress();
         if (msg.sender != cb_address) revert();
         price = curr_price;
