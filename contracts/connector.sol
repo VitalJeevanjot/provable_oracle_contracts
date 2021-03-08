@@ -1,4 +1,3 @@
-// @unsupported: ovm
 /**
  *Submitted for verification at Etherscan.io on 2017-10-12
  */
@@ -14,6 +13,8 @@ Oraclize Connector v1.2.0
 
 // 'compressed' alternative, where all modifiers have been changed to FUNCTIONS
 // which is cheaper for deployment, potentially cheaper execution
+
+import "./ERC20/IERC20.sol";
 
 pragma solidity >0.6.0 <0.8.0;
 
@@ -131,8 +132,8 @@ contract Oraclize {
         delete cbAddresses[newCbAddress];
     }
 
-    function cbAddress() public view returns (address _cbAddress) {
-        if (cbAddresses[tx.origin] != 0x00) return _cbAddress = tx.origin;
+    function cbAddress(address _sender) public view returns (address _cbAddress) {
+        if (cbAddresses[_sender] != 0x00) return _cbAddress = _sender;
     }
 
     function addDSource(string calldata dsname, uint256 multiplier) external {
@@ -212,9 +213,11 @@ contract Oraclize {
         emit Emit_OffchainPaymentFlag(_addr, _addr, _flag, _flag);
     }
 
-    function withdrawFunds(address payable _addr) external {
+    function withdrawFunds(address _addr, address _token_addr ) external {
         onlyadmin();
-        _addr.send(address(this).balance);
+        // _addr.send(address(this).balance);
+        uint256 balance = IERC20(_token_addr).balanceOf(address(this));
+        IERC20(_token_addr).transfer(_addr, balance);
     }
 
     // unnecessary?
@@ -311,8 +314,7 @@ contract Oraclize {
             (offchainPayment[_addr]) ||
             ((_gaslimit <= 200000) &&
                 (reqc[_addr] == 0) &&
-                (gasprice_ <= gasprice) &&
-                (tx.origin != cbAddress()))
+                (gasprice_ <= gasprice))
         ) return 0;
 
         if (gasprice_ == 0) gasprice_ = gasprice;

@@ -9,7 +9,7 @@ abstract contract solcChecker {
 }
 
 interface ProvableI {
-    function cbAddress() external returns (address _cbAddress);
+    function cbAddress(address _addr) external returns (address _cbAddress);
 
     function setProofType(bytes1 _proofType) external;
 
@@ -464,7 +464,7 @@ contract onSayNetwork {
     //     say_randomDS_args[bytes32(0)] = bytes32(0);
     // }
 
-    function say_getPrice(string memory _datasource)
+    function say_Price(string memory _datasource)
         internal
         provableAPI
         returns (uint256 _queryPrice)
@@ -472,7 +472,7 @@ contract onSayNetwork {
         return provable.getPrice(_datasource);
     }
 
-    function say_getPrice(string memory _datasource, uint256 _gasLimit)
+    function say_Price(string memory _datasource, uint256 _gasLimit)
         internal
         provableAPI
         returns (uint256 _queryPrice)
@@ -486,7 +486,7 @@ contract onSayNetwork {
         returns (bytes32 _id)
     {
         uint256 price = provable.getPrice(_datasource);
-        if (price > 1 ether + tx.gasprice * 200000) {
+        if (price > 1 ether + 1 * 200000) {
             return 0; // Unexpectedly high price
         }
         return provable.query{value: price}(0, _datasource, _arg);
@@ -498,7 +498,7 @@ contract onSayNetwork {
         string memory _arg
     ) internal provableAPI returns (bytes32 _id) {
         uint256 price = provable.getPrice(_datasource);
-        if (price > 1 ether + tx.gasprice * 200000) {
+        if (price > 1 ether + 1 * 200000) {
             return 0; // Unexpectedly high price
         }
         return provable.query{value: price}(_timestamp, _datasource, _arg);
@@ -511,7 +511,7 @@ contract onSayNetwork {
         uint256 _gasLimit
     ) internal provableAPI returns (bytes32 _id) {
         uint256 price = provable.getPrice(_datasource, _gasLimit);
-        if (price > 1 ether + tx.gasprice * _gasLimit) {
+        if (price > 1 ether + 1 * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         return
@@ -529,7 +529,7 @@ contract onSayNetwork {
         uint256 _gasLimit
     ) internal provableAPI returns (bytes32 _id) {
         uint256 price = provable.getPrice(_datasource, _gasLimit);
-        if (price > 1 ether + tx.gasprice * _gasLimit) {
+        if (price > 1 ether + 1 * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         return
@@ -547,7 +547,7 @@ contract onSayNetwork {
         string memory _arg2
     ) internal provableAPI returns (bytes32 _id) {
         uint256 price = provable.getPrice(_datasource);
-        if (price > 1 ether + tx.gasprice * 200000) {
+        if (price > 1 ether + 1 * 200000) {
             return 0; // Unexpectedly high price
         }
         return provable.query2{value: price}(0, _datasource, _arg1, _arg2);
@@ -560,7 +560,7 @@ contract onSayNetwork {
         string memory _arg2
     ) internal provableAPI returns (bytes32 _id) {
         uint256 price = provable.getPrice(_datasource);
-        if (price > 1 ether + tx.gasprice * 200000) {
+        if (price > 1 ether + 1 * 200000) {
             return 0; // Unexpectedly high price
         }
         return
@@ -580,7 +580,7 @@ contract onSayNetwork {
         uint256 _gasLimit
     ) internal provableAPI returns (bytes32 _id) {
         uint256 price = provable.getPrice(_datasource, _gasLimit);
-        if (price > 1 ether + tx.gasprice * _gasLimit) {
+        if (price > 1 ether + 1 * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         return
@@ -600,7 +600,7 @@ contract onSayNetwork {
         uint256 _gasLimit
     ) internal provableAPI returns (bytes32 _id) {
         uint256 price = provable.getPrice(_datasource, _gasLimit);
-        if (price > 1 ether + tx.gasprice * _gasLimit) {
+        if (price > 1 ether + 1 * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         return
@@ -619,7 +619,7 @@ contract onSayNetwork {
         returns (bytes32 _id)
     {
         uint256 price = provable.getPrice(_datasource);
-        if (price > 1 ether + tx.gasprice * 200000) {
+        if (price > 1 ether + 1 * 200000) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = stra2cbor(_argN);
@@ -632,7 +632,7 @@ contract onSayNetwork {
         string[] memory _argN
     ) internal provableAPI returns (bytes32 _id) {
         uint256 price = provable.getPrice(_datasource);
-        if (price > 1 ether + tx.gasprice * 200000) {
+        if (price > 1 ether + 1 * 200000) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = stra2cbor(_argN);
@@ -646,7 +646,7 @@ contract onSayNetwork {
         uint256 _gasLimit
     ) internal provableAPI returns (bytes32 _id) {
         uint256 price = provable.getPrice(_datasource, _gasLimit);
-        if (price > 1 ether + tx.gasprice * _gasLimit) {
+        if (price > 1 ether + 1 * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = stra2cbor(_argN);
@@ -665,7 +665,7 @@ contract onSayNetwork {
         uint256 _gasLimit
     ) internal provableAPI returns (bytes32 _id) {
         uint256 price = provable.getPrice(_datasource, _gasLimit);
-        if (price > 1 ether + tx.gasprice * _gasLimit) {
+        if (price > 1 ether + 1 * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = stra2cbor(_argN);
@@ -929,7 +929,7 @@ contract onSayNetwork {
         returns (bytes32 _id)
     {
         uint256 price = provable.getPrice(_datasource);
-        if (price > 1 ether + tx.gasprice * 200000) {
+        if (price > 1 ether + 1 * 200000) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = ba2cbor(_argN);
@@ -942,7 +942,7 @@ contract onSayNetwork {
         bytes[] memory _argN
     ) internal provableAPI returns (bytes32 _id) {
         uint256 price = provable.getPrice(_datasource);
-        if (price > 1 ether + tx.gasprice * 200000) {
+        if (price > 1 ether + 1 * 200000) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = ba2cbor(_argN);
@@ -956,7 +956,7 @@ contract onSayNetwork {
         uint256 _gasLimit
     ) internal provableAPI returns (bytes32 _id) {
         uint256 price = provable.getPrice(_datasource, _gasLimit);
-        if (price > 1 ether + tx.gasprice * _gasLimit) {
+        if (price > 1 ether + 1 * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = ba2cbor(_argN);
@@ -975,7 +975,7 @@ contract onSayNetwork {
         uint256 _gasLimit
     ) internal provableAPI returns (bytes32 _id) {
         uint256 price = provable.getPrice(_datasource, _gasLimit);
-        if (price > 1 ether + tx.gasprice * _gasLimit) {
+        if (price > 1 ether + 1 * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = ba2cbor(_argN);
@@ -1237,12 +1237,12 @@ contract onSayNetwork {
         return provable.setProofType(_proofP);
     }
 
-    function say_cbAddress()
+    function say_cbAddress(address _addr)
         internal
         provableAPI
         returns (address _callbackAddress)
     {
-        return provable.cbAddress();
+        return provable.cbAddress(_addr);
     }
 
     function getCodeSize(address _addr) internal view returns (uint256 _size) {

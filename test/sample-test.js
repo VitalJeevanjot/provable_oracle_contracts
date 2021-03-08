@@ -2,8 +2,8 @@
 
 describe("My Contract Test", () => {
   it("should deploy a contract", async () => {
-    const factory = await l2ethers.getContractFactory("Oraclize")
-    const instance = await factory.deploy()
+    const Oracle = await l2ethers.getContractFactory("Oraclize")
+    const oracle = await Oracle.deploy()
     // Now we're cooking with gas!
   })
 })

@@ -1,3 +1,4 @@
+// @unsupported: ovm
 pragma solidity >0.6.0 <0.8.0;
 
 import "./OracleAPI.sol";
@@ -21,7 +22,7 @@ contract APIConsumer is onSayNetwork {
     }
 
     function updatePrice() public payable {
-        gasPrice = provable_getPrice("URL");
+        gasPrice = say_Price("URL");
 
         if (gasPrice > address(this).balance) {
             emit LogNewProvableQuery(
@@ -31,7 +32,7 @@ contract APIConsumer is onSayNetwork {
             emit LogNewProvableQuery(
                 "Provable query sent, standing by for the answer.."
             );
-            provable_query(
+            say_query(
                 "URL",
                 "json(https://api.pro.coinbase.com/products/ETH-USD/ticker).price"
             );
@@ -39,7 +40,7 @@ contract APIConsumer is onSayNetwork {
     }
 
     function __callback(bytes32 _requestId, string memory curr_price) public {
-        cb_address = provable_cbAddress();
+        cb_address = say_cbAddress(msg.sender);
         if (msg.sender != cb_address) revert();
         price = curr_price;
         emit Publish(price, block.timestamp);

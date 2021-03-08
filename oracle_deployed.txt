@@ -1,6 +1,6 @@
 Verified:
 
-OraclizeAddrResolver (USING THIS): 0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8
+OraclizeAddrResolver: 0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8
 https://kovan.etherscan.io/address/0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8#code
 
 Oraclize: 0xba39d530016f5b50932faCfFAff16A391f1AFf14
@@ -20,7 +20,7 @@ Oraclize: 0xacbC2023D13A825C3D5831CA4c91Eb09B8Cbc0Cc
 https://kovan.etherscan.io/address/0xacbC2023D13A825C3D5831CA4c91Eb09B8Cbc0Cc#code
 ---------------------------------------------------------------
 
-Oraclize (USING THIS): 0xc336B284D0aA0C56BB3c3fDAfDDD9222488116a6
+Oraclize: 0xc336B284D0aA0C56BB3c3fDAfDDD9222488116a6
 https://kovan.etherscan.io/address/0xc336B284D0aA0C56BB3c3fDAfDDD9222488116a6#code
 
 ---------------------------
