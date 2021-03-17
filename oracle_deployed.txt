@@ -1,3 +1,4 @@
+Kovan: 
 Verified:
 
 OraclizeAddrResolver (USING THIS): 0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8
@@ -59,3 +60,22 @@ OraclizeAddrResolver at 0x2239A0C271259fb212909d5598844A32D040332B
 
 Successfully verified contract OraclizeAddrResolver on Etherscan.
 https://testnet.bscscan.com/address/0x2239A0C271259fb212909d5598844A32D040332B#code
+
+
+
+---------------------------------------------------
+
+Moonbeam testnet:
+
+oraclizeAddrResolver deployed to: 0x6bE58e5BC0016A6c6bA628EA83bfc09a84CF0Bb6
+oracle connector deployed to: 0xacbC2023D13A825C3D5831CA4c91Eb09B8Cbc0Cc
+
+-------------------------
+
+oraclizeAddrResolver deployed to: 0x31b81b6aa7FaB799B051DCF2e54CCb042a082566
+oracle connector deployed to: 0xc336B284D0aA0C56BB3c3fDAfDDD9222488116a6
+
+-------------------------
+
+oraclizeAddrResolver deployed to: 0x54bd25ca77f9b1c837ce9ecAd616B1409169FD82
+oracle connector deployed to: 0xb14a6FCa0F4Ae4EED8A42fF2d7F322d2EC099D4a

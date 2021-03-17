@@ -45,17 +45,19 @@ async function main () {
   console.log("oracle connector deployed to:", oracle.address);
 
 
-  setTimeout(async function () {
-    await hre.run("verify:verify", {
-      address: oraclizeAddrResolver.address
-    })
-    await hre.run("verify:verify", {
-      address: oracle.address
-    })
-  }, 5000);
-  await oraclizeAddrResolver.setAddr(oracle.address)
-  await oracle.addCbAddress("0x7762c9dD7380d715FF10F90b2F7fb9c64FB1C670", 0x10)
+  // setTimeout(async function () {
+  //   await hre.run("verify:verify", {
+  //     address: oraclizeAddrResolver.address
+  //   })
+  //   await hre.run("verify:verify", {
+  //     address: oracle.address
+  //   })
+  //   await oraclizeAddrResolver.setAddr(oracle.address)
+  // }, 15000);
 
+  // setTimeout(async function () {
+  //   await oracle.addCbAddress("0x7762c9dD7380d715FF10F90b2F7fb9c64FB1C670", 0x10)
+  // }, 35000);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

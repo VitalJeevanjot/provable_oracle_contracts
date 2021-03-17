@@ -1,0 +1,1492 @@
+[
+  {
+    "inputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "idx_sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "bool",
+        "name": "idx_flag",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "flag",
+        "type": "bool"
+      }
+    ],
+    "name": "Emit_OffchainPaymentFlag",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "cid",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "datasource",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "arg",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "gaslimit",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes1",
+        "name": "proofType",
+        "type": "bytes1"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "gasPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "Log1",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "cid",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "datasource",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "arg",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "function () external",
+        "name": "callback",
+        "type": "function"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "gaslimit",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes1",
+        "name": "proofType",
+        "type": "bytes1"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "gasPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "Log1_fnc",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "cid",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "datasource",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "gaslimit",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes1",
+        "name": "proofType",
+        "type": "bytes1"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "gasPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "Log2",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "cid",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "datasource",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "arg1",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "arg2",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "function () external",
+        "name": "callback",
+        "type": "function"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "gaslimit",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes1",
+        "name": "proofType",
+        "type": "bytes1"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "gasPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "Log2_fnc",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "cid",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "datasource",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "args",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "gaslimit",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes1",
+        "name": "proofType",
+        "type": "bytes1"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "gasPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "LogN",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "cid",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "datasource",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "args",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "function () external",
+        "name": "callback",
+        "type": "function"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "gaslimit",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes1",
+        "name": "proofType",
+        "type": "bytes1"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "gasPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "LogN_fnc",
+    "type": "event"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newCbAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes1",
+        "name": "addressType",
+        "type": "bytes1"
+      }
+    ],
+    "name": "addCbAddress",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newCbAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes1",
+        "name": "addressType",
+        "type": "bytes1"
+      },
+      {
+        "internalType": "bytes",
+        "name": "proof",
+        "type": "bytes"
+      }
+    ],
+    "name": "addCbAddress",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "dsname",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "multiplier",
+        "type": "uint256"
+      }
+    ],
+    "name": "addDSource",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "dsname",
+        "type": "string"
+      },
+      {
+        "internalType": "bytes1",
+        "name": "proofType",
+        "type": "bytes1"
+      },
+      {
+        "internalType": "uint256",
+        "name": "multiplier",
+        "type": "uint256"
+      }
+    ],
+    "name": "addDSource",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "baseprice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "cbAddresses",
+    "outputs": [
+      {
+        "internalType": "bytes1",
+        "name": "",
+        "type": "bytes1"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "changeAdmin",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_newFlagger",
+        "type": "address"
+      }
+    ],
+    "name": "changePaymentFlagger",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_gaslimit",
+        "type": "uint256"
+      }
+    ],
+    "name": "getPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_dsprice",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      }
+    ],
+    "name": "getPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_dsprice",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "bytes32[]",
+        "name": "dsHash",
+        "type": "bytes32[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "multiplier",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "multiAddDSource",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "_gasPrice",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_addr",
+        "type": "address[]"
+      }
+    ],
+    "name": "multisetCustomGasPrice",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "_proofType",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_addr",
+        "type": "address[]"
+      }
+    ],
+    "name": "multisetProofType",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "offchainPayment",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg",
+        "type": "string"
+      }
+    ],
+    "name": "query",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg",
+        "type": "string"
+      }
+    ],
+    "name": "query",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg",
+        "type": "string"
+      }
+    ],
+    "name": "query1",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg",
+        "type": "string"
+      }
+    ],
+    "name": "query1",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_gaslimit",
+        "type": "uint256"
+      }
+    ],
+    "name": "query1",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg",
+        "type": "string"
+      },
+      {
+        "internalType": "function () external",
+        "name": "_fnc",
+        "type": "function"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_gaslimit",
+        "type": "uint256"
+      }
+    ],
+    "name": "query1_fnc",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_gaslimit",
+        "type": "uint256"
+      }
+    ],
+    "name": "query1_withGasLimit",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg1",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg2",
+        "type": "string"
+      }
+    ],
+    "name": "query2",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg1",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg2",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_gaslimit",
+        "type": "uint256"
+      }
+    ],
+    "name": "query2",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg1",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg2",
+        "type": "string"
+      }
+    ],
+    "name": "query2",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg1",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg2",
+        "type": "string"
+      },
+      {
+        "internalType": "function () external",
+        "name": "_fnc",
+        "type": "function"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_gaslimit",
+        "type": "uint256"
+      }
+    ],
+    "name": "query2_fnc",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg1",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg2",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_gaslimit",
+        "type": "uint256"
+      }
+    ],
+    "name": "query2_withGasLimit",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_args",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_gaslimit",
+        "type": "uint256"
+      }
+    ],
+    "name": "queryN",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_args",
+        "type": "bytes"
+      }
+    ],
+    "name": "queryN",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_args",
+        "type": "bytes"
+      }
+    ],
+    "name": "queryN",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_args",
+        "type": "bytes"
+      },
+      {
+        "internalType": "function () external",
+        "name": "_fnc",
+        "type": "function"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_gaslimit",
+        "type": "uint256"
+      }
+    ],
+    "name": "queryN_fnc",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_args",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_gaslimit",
+        "type": "uint256"
+      }
+    ],
+    "name": "queryN_withGasLimit",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_datasource",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_arg",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_gaslimit",
+        "type": "uint256"
+      }
+    ],
+    "name": "query_withGasLimit",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "randomDS_getSessionPubKeyHash",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "randomDS_sessionPubKeysHash",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "bytes32[]",
+        "name": "_newSessionPubKeysHash",
+        "type": "bytes32[]"
+      }
+    ],
+    "name": "randomDS_updateSessionPubKeysHash",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newCbAddress",
+        "type": "address"
+      }
+    ],
+    "name": "removeCbAddress",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "new_baseprice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "proofID",
+        "type": "bytes"
+      }
+    ],
+    "name": "setBasePrice",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "new_baseprice",
+        "type": "uint256"
+      }
+    ],
+    "name": "setBasePrice",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_gasPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "setCustomGasPrice",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "newgasprice",
+        "type": "uint256"
+      }
+    ],
+    "name": "setGasPrice",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_addr",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "_flag",
+        "type": "bool"
+      }
+    ],
+    "name": "setOffchainPayment",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "bytes1",
+        "name": "_proofType",
+        "type": "bytes1"
+      }
+    ],
+    "name": "setProofType",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address payable",
+        "name": "_addr",
+        "type": "address"
+      }
+    ],
+    "name": "withdrawFunds",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

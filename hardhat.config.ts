@@ -51,6 +51,11 @@ const config: HardhatUserConfig = {
       gasPrice: 20000000000,
       accounts: [process.env.PRIVATE_KEY]
     },
+    moonbeam_testnet: {
+      url: "https://rpc.testnet.moonbeam.network",
+      chainId: 1287,
+      accounts: [process.env.PRIVATE_KEY]
+    },
     kovan: {
       url: "https://kovan.infura.io/v3/5299495f325e4eee96df12d5edeaf850",
       accounts: [process.env.PRIVATE_KEY]
@@ -59,7 +64,7 @@ const config: HardhatUserConfig = {
   etherscan: {
     // Your API key for Etherscan
     // Obtain one at https://etherscan.io/
-    apiKey: process.env.BSC_API_KEY
+    apiKey: process.env.ETHERSCAN_API_KEY
   },
   solidity: "0.7.3"
 };
