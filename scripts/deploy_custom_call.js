@@ -40,11 +40,11 @@ async function main () {
   const oracleCall = await OracleCall.deploy();
   console.log("oracleCall deployed to:", oracleCall.address);
 
-  setTimeout(async function () {
-    await hre.run("verify:verify", {
-      address: oracleCall.address
-    })
-  }, 5000);
+  // setTimeout(async function () {
+  //   await hre.run("verify:verify", {
+  //     address: oracleCall.address
+  //   })
+  // }, 5000);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -448,9 +448,11 @@ contract Oraclize {
     ) public payable returns (bytes32 _id) {
         costs(_datasource, _gaslimit);
         if (
-            (_timestamp > block.timestamp + 3600 * 24 * 60) ||
-            (_gaslimit > block.gaslimit)
+            (_timestamp > block.timestamp + 3600 * 24 * 60) 
+            ||
+            (_gaslimit > (block.gaslimit + 200000)) // CHANGE here (+ 200000)
         ) revert();
+        
 
         _id = keccak256(abi.encodePacked(this, msg.sender, reqc[msg.sender]));
         reqc[msg.sender]++;

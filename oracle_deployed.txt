@@ -24,6 +24,7 @@ https://kovan.etherscan.io/address/0xacbC2023D13A825C3D5831CA4c91Eb09B8Cbc0Cc#co
 Oraclize (USING THIS): 0xc336B284D0aA0C56BB3c3fDAfDDD9222488116a6
 https://kovan.etherscan.io/address/0xc336B284D0aA0C56BB3c3fDAfDDD9222488116a6#code
 
+oracleCall deployed to(USING THIS): 0x5F7a0f4f77aCAcdAe2D5263FdA00482b505F3AfC
 ---------------------------
 
 Binance Smart chain......
@@ -79,3 +80,5 @@ oracle connector deployed to: 0xc336B284D0aA0C56BB3c3fDAfDDD9222488116a6
 
 oraclizeAddrResolver deployed to: 0x54bd25ca77f9b1c837ce9ecAd616B1409169FD82
 oracle connector deployed to: 0xb14a6FCa0F4Ae4EED8A42fF2d7F322d2EC099D4a
+
+oracleCall deployed to: 0x57fffD8cFC67901AF18Bc10B577E91003b06d882
