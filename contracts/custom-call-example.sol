@@ -4,6 +4,7 @@ import "./OracleAPI_Moonbeam.sol";
 
 contract APIConsumer is onSayNetwork {
     string public price;
+    bytes public current_proof;
     uint256 public gasPrice;
     address public owner;
     address public cb_address;
@@ -15,6 +16,7 @@ contract APIConsumer is onSayNetwork {
 
     constructor() public {
         owner = msg.sender;
+        say_setProof(proofType_TLSNotary);
     }
 
     modifier onlyOwner() {
@@ -43,10 +45,15 @@ contract APIConsumer is onSayNetwork {
         }
     }
 
-    function __callback(bytes32 _requestId, string memory curr_price) public {
+    function __callback(
+        bytes32 _requestId,
+        string memory curr_price,
+        bytes memory _proof
+    ) public {
         cb_address = say_cbAddress();
         if (msg.sender != cb_address) revert();
         price = curr_price;
+        current_proof = _proof;
         emit Publish(price, block.timestamp);
     }
 }

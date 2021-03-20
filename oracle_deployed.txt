@@ -78,7 +78,7 @@ oracle connector deployed to: 0xc336B284D0aA0C56BB3c3fDAfDDD9222488116a6
 
 -------------------------
 
-oraclizeAddrResolver deployed to: 0x54bd25ca77f9b1c837ce9ecAd616B1409169FD82
-oracle connector deployed to: 0xb14a6FCa0F4Ae4EED8A42fF2d7F322d2EC099D4a
+oraclizeAddrResolver deployed to (Using this): 0x54bd25ca77f9b1c837ce9ecAd616B1409169FD82
+oracle connector deployed to: 0x7F0E3419C89C211fAbc4052db5eba9f67AA4a949
 
-oracleCall deployed to: 0x57fffD8cFC67901AF18Bc10B577E91003b06d882
+oracleCall deployed to: 0x786e228577AfE6bBF6Fd6A585D3AC2a327a16780
