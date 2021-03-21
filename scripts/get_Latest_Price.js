@@ -24,7 +24,7 @@ async function main () {
   const gas_limit_block = await _updatePriceContract.gas_limit_block()
   console.log("Block GAS limit :" + gas_limit_block.toString())
   const proof = await _updatePriceContract.current_proof()
-  console.log("\n\nProof :" + current_proof.toString())
+  console.log("\n\nProof :" + proof.toString())
   console.log("----------------------------")
 
 
