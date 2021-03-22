@@ -10,13 +10,13 @@ async function main () {
 
   const OraclizeAddrResolver = await hre.ethers.getContractFactory("OraclizeAddrResolver");
   // const Oracle = await hre.ethers.getContractFactory("Oraclize");
-  const oracle = new hre.ethers.Contract("0xcB3350d6E6a69b52f00618796735a1De11F3722c", ["function addCbAddress(address, bytes1)"], owner);
-  const oracle_2 = new hre.ethers.Contract("0xcB3350d6E6a69b52f00618796735a1De11F3722c", obj, owner);
-  const oracle_address_res = await OraclizeAddrResolver.attach("0x54bd25ca77f9b1c837ce9ecAd616B1409169FD82")
+  const oracle = new hre.ethers.Contract("0xa9974d2736a427ab3952D82E722BA653043812d6", ["function addCbAddress(address, bytes1)"], owner);
+  const oracle_2 = new hre.ethers.Contract("0xa9974d2736a427ab3952D82E722BA653043812d6", obj, owner);
+  const oracle_address_res = await OraclizeAddrResolver.attach("0xe9CdbDfB0afaBDd22E83c74214a228A480758345")
   // // console.log(oracle)
-  // const tx_setAddress = await oracle_address_res.setAddr("0xb14a6FCa0F4Ae4EED8A42fF2d7F322d2EC099D4a")
-  // await tx_setAddress.wait()
-  // console.log(tx_setAddress)
+  const tx_setAddress = await oracle_address_res.setAddr("0xa9974d2736a427ab3952D82E722BA653043812d6")
+  await tx_setAddress.wait()
+  console.log(tx_setAddress)
 
   console.log("----------------------------")
   const getConnectorAddress = await oracle_address_res.addr()

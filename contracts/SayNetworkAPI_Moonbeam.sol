@@ -1,6 +1,6 @@
 // <SayNetworkAPI>
 
-pragma solidity >0.6.0 <0.8.0; // Incompatible compiler version - please select a compiler within the stated pragma range, or use a different version of the provableAPI!
+pragma solidity >0.6.0 <0.8.0; // Incompatible compiler version - please select a compiler within the stated pragma range, or use a different version of the sayNetworkAPI!
 
 // Dummy contract only used to emit to end-user they are using wrong solc
 abstract contract solcChecker {
@@ -8,7 +8,7 @@ abstract contract solcChecker {
     function f(bytes calldata x) external virtual;
 }
 
-interface ProvableI {
+interface SayNetworkI {
     function cbAddress() external returns (address _cbAddress);
 
     function setProofType(bytes1 _proofType) external;
@@ -311,7 +311,7 @@ End solidity-cborutils
 contract onSayNetwork {
     using CBOR for Buffer.buffer;
 
-    ProvableI provable;
+    SayNetworkI sayNetwork;
     OracleAddrResolverI OAR;
 
     uint256 constant day = 60 * 60 * 24;
@@ -335,12 +335,12 @@ contract onSayNetwork {
     mapping(bytes32 => bytes32) say_randomDS_args;
     mapping(bytes32 => bool) say_randomDS_sessionKeysHashVerified;
 
-    modifier provableAPI {
+    modifier sayNetworkAPI {
         if ((address(OAR) == address(0)) || (getCodeSize(address(OAR)) == 0)) {
             say_setNetwork(networkID_auto);
         }
-        if (address(provable) != OAR.getAddress()) {
-            provable = ProvableI(OAR.getAddress());
+        if (address(sayNetwork) != OAR.getAddress()) {
+            sayNetwork = SayNetworkI(OAR.getAddress());
         }
         _;
     }
@@ -388,67 +388,14 @@ contract onSayNetwork {
     }
 
     function say_setNetwork() internal returns (bool _networkSet) {
-        // if (getCodeSize(0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed) > 0) { //mainnet
-        //     OAR = OracleAddrResolverI(0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed);
-        //     say_setNetworkName("eth_mainnet");
-        //     return true;
-        // }
-        // if (getCodeSize(0xc03A2615D5efaf5F49F60B7BB6583eaec212fdf1) > 0) { //ropsten testnet
-        //     OAR = OracleAddrResolverI(0xc03A2615D5efaf5F49F60B7BB6583eaec212fdf1);
-        //     say_setNetworkName("eth_ropsten3");
-        //     return true;
-        // }
-        if (getCodeSize(0x2239A0C271259fb212909d5598844A32D040332B) > 0) {
-            // bsc testnet
+        if (getCodeSize(0xe9CdbDfB0afaBDd22E83c74214a228A480758345) > 0) {
+            // moonbeam testnet
             OAR = OracleAddrResolverI(
-                0x2239A0C271259fb212909d5598844A32D040332B
+                0xe9CdbDfB0afaBDd22E83c74214a228A480758345
             );
-            say_setNetworkName("bsc_testnet");
+            say_setNetworkName("moonbeam_testnet");
             return true;
         }
-        // if (getCodeSize(0x54bd25ca77f9b1c837ce9ecAd616B1409169FD82) > 0) {
-        //     // moonbeam testnet
-        //     OAR = OracleAddrResolverI(
-        //         0x54bd25ca77f9b1c837ce9ecAd616B1409169FD82
-        //     );
-        //     say_setNetworkName("moonbeam_testnet");
-        //     return true;
-        // }
-        // if (getCodeSize(0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8) > 0) {
-        //     // kovan testnet
-        //     OAR = OracleAddrResolverI(
-        //         0x3AfDE8e95df5D2f1EB734a950C5247A9033a93f8
-        //     );
-        //     say_setNetworkName("eth_kovan");
-        //     return true;
-        // }
-        // if (getCodeSize(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e) > 0) { //kovan testnet
-        //     OAR = OracleAddrResolverI(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e);
-        //     say_setNetworkName("eth_kovan");
-        //     return true;
-        // }
-        // if (getCodeSize(0x146500cfd35B22E4A392Fe0aDc06De1a1368Ed48) > 0) { //rinkeby testnet
-        //     OAR = OracleAddrResolverI(0x146500cfd35B22E4A392Fe0aDc06De1a1368Ed48);
-        //     say_setNetworkName("eth_rinkeby");
-        //     return true;
-        // }
-        // if (getCodeSize(0xa2998EFD205FB9D4B4963aFb70778D6354ad3A41) > 0) { //goerli testnet
-        //     OAR = OracleAddrResolverI(0xa2998EFD205FB9D4B4963aFb70778D6354ad3A41);
-        //     say_setNetworkName("eth_goerli");
-        //     return true;
-        // }
-        // if (getCodeSize(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475) > 0) { //ethereum-bridge
-        //     OAR = OracleAddrResolverI(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475);
-        //     return true;
-        // }
-        // if (getCodeSize(0x20e12A1F859B3FeaE5Fb2A0A32C18F5a65555bBF) > 0) { //ether.camp ide
-        //     OAR = OracleAddrResolverI(0x20e12A1F859B3FeaE5Fb2A0A32C18F5a65555bBF);
-        //     return true;
-        // }
-        // if (getCodeSize(0x51efaF4c8B3C9AfBD5aB9F4bbC82784Ab6ef8fAA) > 0) { //browser-solidity
-        //     OAR = OracleAddrResolverI(0x51efaF4c8B3C9AfBD5aB9F4bbC82784Ab6ef8fAA);
-        //     return true;
-        // }
         return false;
     }
 
@@ -474,42 +421,42 @@ contract onSayNetwork {
 
     function say_getPrice(string memory _datasource)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (uint256 _queryPrice)
     {
-        return provable.getPrice(_datasource);
+        return sayNetwork.getPrice(_datasource);
     }
 
     function say_getPrice(string memory _datasource, uint256 _gasLimit)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (uint256 _queryPrice)
     {
-        return provable.getPrice(_datasource, _gasLimit);
+        return sayNetwork.getPrice(_datasource, _gasLimit);
     }
 
     function say_query(string memory _datasource, string memory _arg)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (bytes32 _id)
     {
-        uint256 price = provable.getPrice(_datasource);
+        uint256 price = sayNetwork.getPrice(_datasource);
         if (price > 1 ether + tx.gasprice * 200000) {
             return 0; // Unexpectedly high price
         }
-        return provable.query{value: price}(0, _datasource, _arg);
+        return sayNetwork.query{value: price}(0, _datasource, _arg);
     }
 
     function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string memory _arg
-    ) internal provableAPI returns (bytes32 _id) {
-        uint256 price = provable.getPrice(_datasource);
+    ) internal sayNetworkAPI returns (bytes32 _id) {
+        uint256 price = sayNetwork.getPrice(_datasource);
         if (price > 1 ether + tx.gasprice * 200000) {
             return 0; // Unexpectedly high price
         }
-        return provable.query{value: price}(_timestamp, _datasource, _arg);
+        return sayNetwork.query{value: price}(_timestamp, _datasource, _arg);
     }
 
     function say_query(
@@ -517,13 +464,13 @@ contract onSayNetwork {
         string memory _datasource,
         string memory _arg,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
-        uint256 price = provable.getPrice(_datasource, _gasLimit);
+    ) internal sayNetworkAPI returns (bytes32 _id) {
+        uint256 price = sayNetwork.getPrice(_datasource, _gasLimit);
         if (price > 1 ether + tx.gasprice * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         return
-            provable.query_withGasLimit{value: price}(
+            sayNetwork.query_withGasLimit{value: price}(
                 _timestamp,
                 _datasource,
                 _arg,
@@ -535,13 +482,13 @@ contract onSayNetwork {
         string memory _datasource,
         string memory _arg,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
-        uint256 price = provable.getPrice(_datasource, _gasLimit);
+    ) internal sayNetworkAPI returns (bytes32 _id) {
+        uint256 price = sayNetwork.getPrice(_datasource, _gasLimit);
         if (price > 1 ether + tx.gasprice * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         return
-            provable.query_withGasLimit{value: price}(
+            sayNetwork.query_withGasLimit{value: price}(
                 0,
                 _datasource,
                 _arg,
@@ -553,12 +500,12 @@ contract onSayNetwork {
         string memory _datasource,
         string memory _arg1,
         string memory _arg2
-    ) internal provableAPI returns (bytes32 _id) {
-        uint256 price = provable.getPrice(_datasource);
+    ) internal sayNetworkAPI returns (bytes32 _id) {
+        uint256 price = sayNetwork.getPrice(_datasource);
         if (price > 1 ether + tx.gasprice * 200000) {
             return 0; // Unexpectedly high price
         }
-        return provable.query2{value: price}(0, _datasource, _arg1, _arg2);
+        return sayNetwork.query2{value: price}(0, _datasource, _arg1, _arg2);
     }
 
     function say_query(
@@ -566,13 +513,13 @@ contract onSayNetwork {
         string memory _datasource,
         string memory _arg1,
         string memory _arg2
-    ) internal provableAPI returns (bytes32 _id) {
-        uint256 price = provable.getPrice(_datasource);
+    ) internal sayNetworkAPI returns (bytes32 _id) {
+        uint256 price = sayNetwork.getPrice(_datasource);
         if (price > 1 ether + tx.gasprice * 200000) {
             return 0; // Unexpectedly high price
         }
         return
-            provable.query2{value: price}(
+            sayNetwork.query2{value: price}(
                 _timestamp,
                 _datasource,
                 _arg1,
@@ -586,13 +533,13 @@ contract onSayNetwork {
         string memory _arg1,
         string memory _arg2,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
-        uint256 price = provable.getPrice(_datasource, _gasLimit);
+    ) internal sayNetworkAPI returns (bytes32 _id) {
+        uint256 price = sayNetwork.getPrice(_datasource, _gasLimit);
         if (price > 1 ether + tx.gasprice * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         return
-            provable.query2_withGasLimit{value: price}(
+            sayNetwork.query2_withGasLimit{value: price}(
                 _timestamp,
                 _datasource,
                 _arg1,
@@ -606,13 +553,13 @@ contract onSayNetwork {
         string memory _arg1,
         string memory _arg2,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
-        uint256 price = provable.getPrice(_datasource, _gasLimit);
+    ) internal sayNetworkAPI returns (bytes32 _id) {
+        uint256 price = sayNetwork.getPrice(_datasource, _gasLimit);
         if (price > 1 ether + tx.gasprice * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         return
-            provable.query2_withGasLimit{value: price}(
+            sayNetwork.query2_withGasLimit{value: price}(
                 0,
                 _datasource,
                 _arg1,
@@ -623,28 +570,28 @@ contract onSayNetwork {
 
     function say_query(string memory _datasource, string[] memory _argN)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (bytes32 _id)
     {
-        uint256 price = provable.getPrice(_datasource);
+        uint256 price = sayNetwork.getPrice(_datasource);
         if (price > 1 ether + tx.gasprice * 200000) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = stra2cbor(_argN);
-        return provable.queryN{value: price}(0, _datasource, args);
+        return sayNetwork.queryN{value: price}(0, _datasource, args);
     }
 
     function say_query(
         uint256 _timestamp,
         string memory _datasource,
         string[] memory _argN
-    ) internal provableAPI returns (bytes32 _id) {
-        uint256 price = provable.getPrice(_datasource);
+    ) internal sayNetworkAPI returns (bytes32 _id) {
+        uint256 price = sayNetwork.getPrice(_datasource);
         if (price > 1 ether + tx.gasprice * 200000) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = stra2cbor(_argN);
-        return provable.queryN{value: price}(_timestamp, _datasource, args);
+        return sayNetwork.queryN{value: price}(_timestamp, _datasource, args);
     }
 
     function say_query(
@@ -652,14 +599,14 @@ contract onSayNetwork {
         string memory _datasource,
         string[] memory _argN,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
-        uint256 price = provable.getPrice(_datasource, _gasLimit);
+    ) internal sayNetworkAPI returns (bytes32 _id) {
+        uint256 price = sayNetwork.getPrice(_datasource, _gasLimit);
         if (price > 1 ether + tx.gasprice * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = stra2cbor(_argN);
         return
-            provable.queryN_withGasLimit{value: price}(
+            sayNetwork.queryN_withGasLimit{value: price}(
                 _timestamp,
                 _datasource,
                 args,
@@ -671,14 +618,14 @@ contract onSayNetwork {
         string memory _datasource,
         string[] memory _argN,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
-        uint256 price = provable.getPrice(_datasource, _gasLimit);
+    ) internal sayNetworkAPI returns (bytes32 _id) {
+        uint256 price = sayNetwork.getPrice(_datasource, _gasLimit);
         if (price > 1 ether + tx.gasprice * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = stra2cbor(_argN);
         return
-            provable.queryN_withGasLimit{value: price}(
+            sayNetwork.queryN_withGasLimit{value: price}(
                 0,
                 _datasource,
                 args,
@@ -688,7 +635,7 @@ contract onSayNetwork {
 
     function say_query(string memory _datasource, string[1] memory _args)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (bytes32 _id)
     {
         string[] memory dynargs = new string[](1);
@@ -700,7 +647,7 @@ contract onSayNetwork {
         uint256 _timestamp,
         string memory _datasource,
         string[1] memory _args
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](1);
         dynargs[0] = _args[0];
         return say_query(_timestamp, _datasource, dynargs);
@@ -711,7 +658,7 @@ contract onSayNetwork {
         string memory _datasource,
         string[1] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](1);
         dynargs[0] = _args[0];
         return say_query(_timestamp, _datasource, dynargs, _gasLimit);
@@ -721,7 +668,7 @@ contract onSayNetwork {
         string memory _datasource,
         string[1] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](1);
         dynargs[0] = _args[0];
         return say_query(_datasource, dynargs, _gasLimit);
@@ -729,7 +676,7 @@ contract onSayNetwork {
 
     function say_query(string memory _datasource, string[2] memory _args)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (bytes32 _id)
     {
         string[] memory dynargs = new string[](2);
@@ -742,7 +689,7 @@ contract onSayNetwork {
         uint256 _timestamp,
         string memory _datasource,
         string[2] memory _args
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](2);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -754,7 +701,7 @@ contract onSayNetwork {
         string memory _datasource,
         string[2] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](2);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -765,7 +712,7 @@ contract onSayNetwork {
         string memory _datasource,
         string[2] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](2);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -774,7 +721,7 @@ contract onSayNetwork {
 
     function say_query(string memory _datasource, string[3] memory _args)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (bytes32 _id)
     {
         string[] memory dynargs = new string[](3);
@@ -788,7 +735,7 @@ contract onSayNetwork {
         uint256 _timestamp,
         string memory _datasource,
         string[3] memory _args
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](3);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -801,7 +748,7 @@ contract onSayNetwork {
         string memory _datasource,
         string[3] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](3);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -813,7 +760,7 @@ contract onSayNetwork {
         string memory _datasource,
         string[3] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](3);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -823,7 +770,7 @@ contract onSayNetwork {
 
     function say_query(string memory _datasource, string[4] memory _args)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (bytes32 _id)
     {
         string[] memory dynargs = new string[](4);
@@ -838,7 +785,7 @@ contract onSayNetwork {
         uint256 _timestamp,
         string memory _datasource,
         string[4] memory _args
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](4);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -852,7 +799,7 @@ contract onSayNetwork {
         string memory _datasource,
         string[4] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](4);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -865,7 +812,7 @@ contract onSayNetwork {
         string memory _datasource,
         string[4] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](4);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -876,7 +823,7 @@ contract onSayNetwork {
 
     function say_query(string memory _datasource, string[5] memory _args)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (bytes32 _id)
     {
         string[] memory dynargs = new string[](5);
@@ -892,7 +839,7 @@ contract onSayNetwork {
         uint256 _timestamp,
         string memory _datasource,
         string[5] memory _args
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](5);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -907,7 +854,7 @@ contract onSayNetwork {
         string memory _datasource,
         string[5] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](5);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -921,7 +868,7 @@ contract onSayNetwork {
         string memory _datasource,
         string[5] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         string[] memory dynargs = new string[](5);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -933,28 +880,28 @@ contract onSayNetwork {
 
     function say_query(string memory _datasource, bytes[] memory _argN)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (bytes32 _id)
     {
-        uint256 price = provable.getPrice(_datasource);
+        uint256 price = sayNetwork.getPrice(_datasource);
         if (price > 1 ether + tx.gasprice * 200000) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = ba2cbor(_argN);
-        return provable.queryN{value: price}(0, _datasource, args);
+        return sayNetwork.queryN{value: price}(0, _datasource, args);
     }
 
     function say_query(
         uint256 _timestamp,
         string memory _datasource,
         bytes[] memory _argN
-    ) internal provableAPI returns (bytes32 _id) {
-        uint256 price = provable.getPrice(_datasource);
+    ) internal sayNetworkAPI returns (bytes32 _id) {
+        uint256 price = sayNetwork.getPrice(_datasource);
         if (price > 1 ether + tx.gasprice * 200000) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = ba2cbor(_argN);
-        return provable.queryN{value: price}(_timestamp, _datasource, args);
+        return sayNetwork.queryN{value: price}(_timestamp, _datasource, args);
     }
 
     function say_query(
@@ -962,14 +909,14 @@ contract onSayNetwork {
         string memory _datasource,
         bytes[] memory _argN,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
-        uint256 price = provable.getPrice(_datasource, _gasLimit);
+    ) internal sayNetworkAPI returns (bytes32 _id) {
+        uint256 price = sayNetwork.getPrice(_datasource, _gasLimit);
         if (price > 1 ether + tx.gasprice * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = ba2cbor(_argN);
         return
-            provable.queryN_withGasLimit{value: price}(
+            sayNetwork.queryN_withGasLimit{value: price}(
                 _timestamp,
                 _datasource,
                 args,
@@ -981,14 +928,14 @@ contract onSayNetwork {
         string memory _datasource,
         bytes[] memory _argN,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
-        uint256 price = provable.getPrice(_datasource, _gasLimit);
+    ) internal sayNetworkAPI returns (bytes32 _id) {
+        uint256 price = sayNetwork.getPrice(_datasource, _gasLimit);
         if (price > 1 ether + tx.gasprice * _gasLimit) {
             return 0; // Unexpectedly high price
         }
         bytes memory args = ba2cbor(_argN);
         return
-            provable.queryN_withGasLimit{value: price}(
+            sayNetwork.queryN_withGasLimit{value: price}(
                 0,
                 _datasource,
                 args,
@@ -998,7 +945,7 @@ contract onSayNetwork {
 
     function say_query(string memory _datasource, bytes[1] memory _args)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (bytes32 _id)
     {
         bytes[] memory dynargs = new bytes[](1);
@@ -1010,7 +957,7 @@ contract onSayNetwork {
         uint256 _timestamp,
         string memory _datasource,
         bytes[1] memory _args
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](1);
         dynargs[0] = _args[0];
         return say_query(_timestamp, _datasource, dynargs);
@@ -1021,7 +968,7 @@ contract onSayNetwork {
         string memory _datasource,
         bytes[1] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](1);
         dynargs[0] = _args[0];
         return say_query(_timestamp, _datasource, dynargs, _gasLimit);
@@ -1031,7 +978,7 @@ contract onSayNetwork {
         string memory _datasource,
         bytes[1] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](1);
         dynargs[0] = _args[0];
         return say_query(_datasource, dynargs, _gasLimit);
@@ -1039,7 +986,7 @@ contract onSayNetwork {
 
     function say_query(string memory _datasource, bytes[2] memory _args)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (bytes32 _id)
     {
         bytes[] memory dynargs = new bytes[](2);
@@ -1052,7 +999,7 @@ contract onSayNetwork {
         uint256 _timestamp,
         string memory _datasource,
         bytes[2] memory _args
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](2);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -1064,7 +1011,7 @@ contract onSayNetwork {
         string memory _datasource,
         bytes[2] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](2);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -1075,7 +1022,7 @@ contract onSayNetwork {
         string memory _datasource,
         bytes[2] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](2);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -1084,7 +1031,7 @@ contract onSayNetwork {
 
     function say_query(string memory _datasource, bytes[3] memory _args)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (bytes32 _id)
     {
         bytes[] memory dynargs = new bytes[](3);
@@ -1098,7 +1045,7 @@ contract onSayNetwork {
         uint256 _timestamp,
         string memory _datasource,
         bytes[3] memory _args
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](3);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -1111,7 +1058,7 @@ contract onSayNetwork {
         string memory _datasource,
         bytes[3] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](3);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -1123,7 +1070,7 @@ contract onSayNetwork {
         string memory _datasource,
         bytes[3] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](3);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -1133,7 +1080,7 @@ contract onSayNetwork {
 
     function say_query(string memory _datasource, bytes[4] memory _args)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (bytes32 _id)
     {
         bytes[] memory dynargs = new bytes[](4);
@@ -1148,7 +1095,7 @@ contract onSayNetwork {
         uint256 _timestamp,
         string memory _datasource,
         bytes[4] memory _args
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](4);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -1162,7 +1109,7 @@ contract onSayNetwork {
         string memory _datasource,
         bytes[4] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](4);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -1175,7 +1122,7 @@ contract onSayNetwork {
         string memory _datasource,
         bytes[4] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](4);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -1186,7 +1133,7 @@ contract onSayNetwork {
 
     function say_query(string memory _datasource, bytes[5] memory _args)
         internal
-        provableAPI
+        sayNetworkAPI
         returns (bytes32 _id)
     {
         bytes[] memory dynargs = new bytes[](5);
@@ -1202,7 +1149,7 @@ contract onSayNetwork {
         uint256 _timestamp,
         string memory _datasource,
         bytes[5] memory _args
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](5);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -1217,7 +1164,7 @@ contract onSayNetwork {
         string memory _datasource,
         bytes[5] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](5);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -1231,7 +1178,7 @@ contract onSayNetwork {
         string memory _datasource,
         bytes[5] memory _args,
         uint256 _gasLimit
-    ) internal provableAPI returns (bytes32 _id) {
+    ) internal sayNetworkAPI returns (bytes32 _id) {
         bytes[] memory dynargs = new bytes[](5);
         dynargs[0] = _args[0];
         dynargs[1] = _args[1];
@@ -1241,16 +1188,16 @@ contract onSayNetwork {
         return say_query(_datasource, dynargs, _gasLimit);
     }
 
-    function say_setProof(bytes1 _proofP) internal provableAPI {
-        return provable.setProofType(_proofP);
+    function say_setProof(bytes1 _proofP) internal sayNetworkAPI {
+        return sayNetwork.setProofType(_proofP);
     }
 
     function say_cbAddress()
         internal
-        provableAPI
+        sayNetworkAPI
         returns (address _callbackAddress)
     {
-        return provable.cbAddress();
+        return sayNetwork.cbAddress();
     }
 
     function getCodeSize(address _addr) internal view returns (uint256 _size) {
@@ -1259,16 +1206,16 @@ contract onSayNetwork {
         }
     }
 
-    function say_setCustomGasPrice(uint256 _gasPrice) internal provableAPI {
-        return provable.setCustomGasPrice(_gasPrice);
+    function say_setCustomGasPrice(uint256 _gasPrice) internal sayNetworkAPI {
+        return sayNetwork.setCustomGasPrice(_gasPrice);
     }
 
     function say_randomDS_getSessionPubKeyHash()
         internal
-        provableAPI
+        sayNetworkAPI
         returns (bytes32 _sessionKeyHash)
     {
-        return provable.randomDS_getSessionPubKeyHash();
+        return sayNetwork.randomDS_getSessionPubKeyHash();
     }
 
     function parseAddr(string memory _a)

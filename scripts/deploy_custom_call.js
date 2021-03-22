@@ -36,7 +36,8 @@ async function main () {
   // // await hre.run('compile');
 
   // // We get the contract to deploy
-  const OracleCall = await hre.ethers.getContractFactory("APIConsumer");
+  // const OracleCall = await hre.ethers.getContractFactory("APIConsumer");
+  const OracleCall = await hre.ethers.getContractFactory("APIConsumerBSC");
   const oracleCall = await OracleCall.deploy();
   console.log("oracleCall deployed to:", oracleCall.address);
 

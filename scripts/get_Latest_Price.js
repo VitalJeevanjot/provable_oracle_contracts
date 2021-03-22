@@ -3,7 +3,7 @@ async function main () {
   const [owner] = await hre.ethers.getSigners();
   const updatePriceContract = await hre.ethers.getContractFactory("APIConsumer");
   // Moonbeam
-  const _updatePriceContract = updatePriceContract.attach("0x18794d1F786a1Db70C7a83c8201b457b3629C914")
+  const _updatePriceContract = updatePriceContract.attach("0x6bE58e5BC0016A6c6bA628EA83bfc09a84CF0Bb6")
   // Kovan
   // const _updatePriceContract = updatePriceContract.attach("0x5F7a0f4f77aCAcdAe2D5263FdA00482b505F3AfC")
   // BSC testnet

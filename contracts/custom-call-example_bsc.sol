@@ -1,6 +1,6 @@
 pragma solidity >0.6.0 <0.8.0;
 
-import "./OracleAPI_Moonbeam.sol";
+import "./SayNetworkAPI_Moonbeam.sol";
 
 contract APIConsumer is onSayNetwork {
     string public price;
@@ -25,7 +25,6 @@ contract APIConsumer is onSayNetwork {
     }
 
     function updatePrice() public payable {
-        // gasPrice = 550;
         gas_limit_block = block.gaslimit;
         gasPrice = say_getPrice("URL");
         current_balance = address(this).balance;
