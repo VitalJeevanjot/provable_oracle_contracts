@@ -1,7 +1,7 @@
-// @unsupported: ovm
 pragma solidity >0.6.0 <0.8.0;
 
 import "./OracleAPI.sol";
+import "./ERC20/IERC20.sol";
 
 contract APIConsumer is onSayNetwork {
     string public price;
@@ -9,11 +9,14 @@ contract APIConsumer is onSayNetwork {
     address public owner;
     address public cb_address;
 
+    address public token_address;
+
     event Publish(string ethv, uint256 timestamp);
     event LogNewProvableQuery(string description);
 
     constructor() public {
         owner = msg.sender;
+        token_address = 0x4200000000000000000000000000000000000006;
     }
 
     modifier onlyOwner() {
@@ -23,8 +26,8 @@ contract APIConsumer is onSayNetwork {
 
     function updatePrice() public payable {
         gasPrice = say_Price("URL");
-
-        if (gasPrice > address(this).balance) {
+        uint256 balance = IERC20(token_address).balanceOf(address(this));
+        if (gasPrice > balance) {
             emit LogNewProvableQuery(
                 "Provable query was NOT sent, please send some ETH to cover for the query fee"
             );

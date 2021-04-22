@@ -213,7 +213,7 @@ contract Oraclize {
         emit Emit_OffchainPaymentFlag(_addr, _addr, _flag, _flag);
     }
 
-    function withdrawFunds(address _addr, address _token_addr ) external {
+    function withdrawFunds(address payable _addr, address _token_addr ) external {
         onlyadmin();
         // _addr.send(address(this).balance);
         uint256 balance = IERC20(_token_addr).balanceOf(address(this));

@@ -1,8 +1,7 @@
 import { HardhatUserConfig } from 'hardhat/types'
 import "@nomiclabs/hardhat-waffle";
 
-import '@eth-optimism/plugins/hardhat/compiler';
-import '@eth-optimism/plugins/hardhat/ethers';
+import '@eth-optimism/hardhat-ovm'
 
 import '@nomiclabs/hardhat-ethers'
 import '@nomiclabs/hardhat-waffle'
@@ -31,6 +30,7 @@ const config: HardhatUserConfig = {
       accounts: ["0xeb9666fa13d4af31414f310a26e9c679c3a762f4eea159e9eea715add926bd8c"],
       blockGasLimit: 9000000,
       gasPrice: "auto",
+      ovm: true
     },
     local: {
       chainId: 69,
