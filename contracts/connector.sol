@@ -1,20 +1,3 @@
-// @unsupported: ovm
-/**
- *Submitted for verification at Etherscan.io on 2017-10-12
- */
-
-/*
-Copyright (c) 2015-2016 Oraclize SRL
-Copyright (c) 2016-2017 Oraclize LTD
-*/
-
-/*
-Oraclize Connector v1.2.0
-*/
-
-// 'compressed' alternative, where all modifiers have been changed to FUNCTIONS
-// which is cheaper for deployment, potentially cheaper execution
-
 pragma solidity >0.6.0 <0.8.0;
 
 contract Oraclize {
